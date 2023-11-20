@@ -9,7 +9,8 @@ class UserSignUpService {
     required String userAge,
     required String userGender,
   }) async {
-    var url = Uri.parse('http://192.168.70.65:3300/user/join'); // HTTPS URL로 변경해야 함~~
+    var url =
+        Uri.parse('http://192.168.70.65:3300/user/join'); // HTTPS URL로 변경해야 함~~
 
     try {
       var response = await http.post(

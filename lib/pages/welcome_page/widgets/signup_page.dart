@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/pages/welcome_page/widgets/sign_up_toast.dart';
 import 'package:flutter_test_project/pages/welcome_page/widgets/welcome_page_login_join_input.dart';
 import 'package:flutter_test_project/services/sign_up_services.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
@@ -13,6 +14,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  late String message = "";
+
   final Map<String, String> _userData = {
     'userId': '',
     'userPw': '',
@@ -36,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   bool _validateData() {
     if (_userData['userPw'] != _userData['userRePw']) {
-      print("패스워드가 일치하지 않습니다.");
+      message = "패스워드가 일치하지 않습니다.";
       // 여기에 가입시키지 않을, 경우의 수를 넣어주면 됩니다.
       return false;
     }
@@ -62,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               child: Container(
-                margin: const EdgeInsets.only(top: 70, left: 20, right: 20),
+                margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -96,8 +99,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             userAge: _userData['userAge']!,
                             userGender: _userData['userGender']!,
                           );
-                          // Navigator.pop(context);
+                          Navigator.pop(context);
                           // 이전페이지로 일단 돌아가게 했는데, 경우에 따라 다르게도 가능함.
+                        } else {
+                          showToast(context, message);
                         }
                       },
                       child: LoginButton(text: "확인"),
