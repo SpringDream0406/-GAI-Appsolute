@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -6,9 +7,11 @@ class CustomTextField extends StatelessWidget {
   final bool isObscure;
   final IconData? icon;
   final Function(String) onChanged;
+  final int? maxLength;
 
   const CustomTextField(
       {Key? key,
+      this.maxLength = 12,
       required this.label,
       required this.hint,
       this.isObscure = false,
@@ -22,12 +25,14 @@ class CustomTextField extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 1.7,
       height: 50,
       child: TextField(
+        maxLength: maxLength,
         obscureText: isObscure,
         onChanged: onChanged,
         textAlignVertical: TextAlignVertical.bottom,
         style: TextStyle(
             color: Colors.white, fontSize: 20, decorationThickness: 0),
         decoration: InputDecoration(
+          counterText: '',
           filled: true,
           fillColor: Colors.black54,
           labelText: label,

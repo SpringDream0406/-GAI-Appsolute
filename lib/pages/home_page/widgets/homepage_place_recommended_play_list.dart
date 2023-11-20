@@ -10,6 +10,7 @@ class PlaceRecommendedPlaylist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: ClampingScrollPhysics(),
       itemCount: info.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {

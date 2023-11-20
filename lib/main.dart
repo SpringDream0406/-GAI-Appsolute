@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         title: "Flutter Demo",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          useMaterial3: false,
           primarySwatch: Colors.blue,
         ),
         home: MultiBlocProvider(
