@@ -24,6 +24,7 @@ class _ProducerBoxState extends State<ProducerBox>
     );
 
     _animation = Tween(begin: 0.0, end: 30.0).animate(CurvedAnimation(
+      // 처음과 끝의 각도를 조절하기 위한 것, - 0, 30
       parent: _controllerCard,
       curve: Curves.easeOut,
     ));
@@ -32,7 +33,7 @@ class _ProducerBoxState extends State<ProducerBox>
       end: Alignment(1.0, 1.0),
     ).animate(CurvedAnimation(
       parent: _controllerCard,
-      curve: Curves.easeOut,
+      curve: Curves.bounceOut,
     ))
       ..addListener(() {
         setState(() {});
@@ -44,6 +45,7 @@ class _ProducerBoxState extends State<ProducerBox>
     _controllerCard.dispose();
     super.dispose();
   }
+  // 컨트롤러 삭제.
 
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -55,19 +57,21 @@ class _ProducerBoxState extends State<ProducerBox>
     _controllerCard.animateBack(
       0.0,
       duration: Duration(milliseconds: 700), // 효과의 지속시간 조절
-      curve: Curves.bounceOut, // 탄성 곡선 적용
+      curve: Curves.bounceOut, // 탄성 곡선 적용, 튕기는 현상, 바운스아웃
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final angleY = (_animation.value) * 0.03; // 드래그에 따른 Y축 회전
+    // 가로 측의 회전
     final double initialAngleX = 0.0174533; // 초기 X축 회전 (대각선 방향), 라디안 단위
     final double initialAngleZ = -8 * 0.0174533; // 초기 Z축 회전 (대각선 방향), 라디안 단위
+    // 카드의 각도를 조절, -8는 왼쪽으로 8도 기울기.
 
     final Alignment gradientCenter = _gradientCenterAnimation.value;
 
-    // 광원에 따라 그림자의 위치를 계산
+    // 광원에 따라 그림자의 위치를 계산함.
     final double shadowX = gradientCenter.x * -10; // 그림자 X 위치 조정
     final double shadowY = gradientCenter.y * -10; // 그림자 Y 위치 조정
 
@@ -115,6 +119,7 @@ class _ProducerBoxState extends State<ProducerBox>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // 들어갈 내용은 아래에 들어간다. Column이 아니라 스택구조로 유연하게 해도 됨.
                       SizeBoxH20(),
                       AppLargeText(
                         text: " Producer",
@@ -123,15 +128,15 @@ class _ProducerBoxState extends State<ProducerBox>
                       ),
                       SizeBoxH40(),
                       AppLargeText(
-                          text: "  Lee ChanYong",
-                          size: 28,
-                          color: Colors.white),
-                      SizeBoxH20(),
-                      AppLargeText(
                           text: "  Yang ChunMo", size: 28, color: Colors.white),
                       SizeBoxH20(),
                       AppLargeText(
                           text: "  Lee DongHun", size: 28, color: Colors.white),
+                      SizeBoxH20(),
+                      AppLargeText(
+                          text: "  Lee ChanYong",
+                          size: 28,
+                          color: Colors.white),
                       SizeBoxH20(),
                       AppLargeText(
                           text: "  Choi ByengMin",

@@ -33,7 +33,7 @@ class UserSignUpService {
 
     // 응답 처리
     if (response.statusCode == 200) {
-      // 성공적으로 처리된 경우
+      // 성공적으로 처리된 경우 -
       print('회원가입 성공');
     } else {
       // 실패한 경우
@@ -41,7 +41,6 @@ class UserSignUpService {
     }
   }
 }
-
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
