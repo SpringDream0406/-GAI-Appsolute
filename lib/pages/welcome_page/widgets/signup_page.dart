@@ -5,7 +5,6 @@ import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/login_button.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
