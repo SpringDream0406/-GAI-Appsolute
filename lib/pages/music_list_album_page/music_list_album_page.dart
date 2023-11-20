@@ -1,37 +1,39 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/models/test_model.dart';
-import 'package:flutter_test_project/pages/music_list_artist_page/cubit/music_list_artist_page_info_cubits.dart';
-import 'package:flutter_test_project/pages/music_list_artist_page/widgets/music_list_artist_page_background_img.dart';
-import 'package:flutter_test_project/pages/music_list_artist_page/widgets/music_list_artist_page_top_bar.dart';
-import 'package:flutter_test_project/pages/music_list_artist_page/widgets/music_list_artist_page_wish_and_play.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/cubit/music_list_album_page_info_cubits.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/widgets/music_list_album_page_background.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/widgets/music_list_album_page_jacket.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/widgets/music_list_album_top_bar.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/widgets/music_list_album_wish_and_play_botten.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
-class MusicListArtistPage extends StatefulWidget {
-  final TestModel info;
+class MusicListAlbumPage extends StatefulWidget {
   final String imgAsset;
-  const MusicListArtistPage(
+  final TestModel info;
+  const MusicListAlbumPage(
       {super.key, required this.info, required this.imgAsset});
 
   @override
-  State<MusicListArtistPage> createState() => _MusicListArtistPageState();
+  State<MusicListAlbumPage> createState() => _MusicListAlbumPageState();
 }
 
-class _MusicListArtistPageState extends State<MusicListArtistPage> {
+class _MusicListAlbumPageState extends State<MusicListAlbumPage> {
   // 스크롤 이동을 주기위한 코드입니다.
-  late ScrollController _musicListArtistcontroller = ScrollController();
+  late ScrollController _musicListAlbumcontroller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _musicListArtistcontroller = ScrollController(); // initState에서 초기화
+    _musicListAlbumcontroller = ScrollController(); // initState에서 초기화
   }
 
   @override
   void dispose() {
-    _musicListArtistcontroller.dispose(); // _tabController를 dispose 메서드에서 해제
+    _musicListAlbumcontroller.dispose(); // _tabController를 dispose 메서드에서 해제
     super.dispose();
   }
 
@@ -84,7 +86,7 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
 
   @override
   Widget build(BuildContext context) {
-    var list = BlocProvider.of<MusicListArtistPageInfoCubits>(context).state;
+    var list = BlocProvider.of<MusicListAlbumPageInfoCubits>(context).state;
     //
     // MusicListArtistPage detail = state as MusicListArtistPage;
     //
@@ -105,14 +107,14 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
           child: Stack(
             children: [
               // 상단의 이미지 (widget)
-              MusicListArtistBackground(imgAsset: widget.imgAsset),
+              MusicListAlbumBackground(imgAsset: widget.imgAsset),
 
               // 상단의 메뉴 (widget)
-              MusicListArtistPageTopBar(),
+              MusicListAlbumPageTopBar(),
 
               // 하단의 출력 공간
               Positioned(
-                  top: 240,
+                  top: 260,
                   child: Container(
                     padding: EdgeInsets.only(left: 20, top: 30, right: 20),
                     width: MediaQuery.of(context).size.width,
@@ -137,9 +139,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AppLargeText(
-                              text: "가수 이름",
+                              text: "앨범 제목",
                               color: Colors.white,
-                              size: 40,
+                              size: 38,
                             ),
                           ],
                         ),
@@ -160,12 +162,11 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: ArtistWishButton(
+                              child: AlbumWishButton(
                                 btnColor: btncolor,
                                 onTap: () {
                                   var list = BlocProvider.of<
-                                              MusicListArtistPageInfoCubits>(
-                                          context)
+                                          MusicListAlbumPageInfoCubits>(context)
                                       .state;
 
                                   if (list.isEmpty) {
@@ -174,9 +175,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                     });
 
                                     BlocProvider.of<
-                                                MusicListArtistPageInfoCubits>(
+                                                MusicListAlbumPageInfoCubits>(
                                             context)
-                                        .updateMusicListArtistPageWish(
+                                        .updateMusicListAlbumPageWish(
                                             widget.info.name,
                                             selectedIndex,
                                             btncolor);
@@ -186,9 +187,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                         if (list[i].color == Colors.white70) {
                                           Future.delayed(Duration.zero, () {
                                             BlocProvider.of<
-                                                        MusicListArtistPageInfoCubits>(
+                                                        MusicListAlbumPageInfoCubits>(
                                                     context)
-                                                .updateMusicListArtistPageWish(
+                                                .updateMusicListAlbumPageWish(
                                                     widget.info.name,
                                                     selectedIndex,
                                                     btncolor);
@@ -202,9 +203,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                             btncolor = Colors.white70;
                                           });
                                           BlocProvider.of<
-                                                      MusicListArtistPageInfoCubits>(
+                                                      MusicListAlbumPageInfoCubits>(
                                                   context)
-                                              .updateMusicListArtistPageWish(
+                                              .updateMusicListAlbumPageWish(
                                                   widget.info.name,
                                                   selectedIndex,
                                                   btncolor);
@@ -216,9 +217,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                             btncolor = Colors.white70;
                                           });
                                           BlocProvider.of<
-                                                      MusicListArtistPageInfoCubits>(
+                                                      MusicListAlbumPageInfoCubits>(
                                                   context)
-                                              .updateMusicListArtistPageWish(
+                                              .updateMusicListAlbumPageWish(
                                                   widget.info.name,
                                                   selectedIndex,
                                                   btncolor);
@@ -227,9 +228,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                             btncolor = Colors.white;
                                           });
                                           BlocProvider.of<
-                                                      MusicListArtistPageInfoCubits>(
+                                                      MusicListAlbumPageInfoCubits>(
                                                   context)
-                                              .updateMusicListArtistPageWish(
+                                              .updateMusicListAlbumPageWish(
                                                   widget.info.name,
                                                   selectedIndex,
                                                   btncolor);
@@ -242,7 +243,7 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                             ),
                             SizeBoxW15(),
                             Expanded(
-                              child: ArtistPlayButton(
+                              child: AlbumPlayButton(
                                 onTap: () {},
                               ),
                             )
@@ -254,7 +255,7 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                           height: 240,
                           width: double.maxFinite,
                           child: ListView.builder(
-                              controller: _musicListArtistcontroller,
+                              controller: _musicListAlbumcontroller,
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
                               itemCount: images.length,
@@ -263,7 +264,7 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                   onTap: () {
                                     var data = widget.info;
                                     var list = BlocProvider.of<
-                                                MusicListArtistPageInfoCubits>(
+                                                MusicListAlbumPageInfoCubits>(
                                             context)
                                         .state;
 
@@ -274,9 +275,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                         } else {
                                           print('안녕 새로운 인덱스 $index');
                                           BlocProvider.of<
-                                                      MusicListArtistPageInfoCubits>(
+                                                      MusicListAlbumPageInfoCubits>(
                                                   context)
-                                              .updateMusicListArtistPageInfo(
+                                              .updateMusicListAlbumPageInfo(
                                                   widget.info.name,
                                                   index,
                                                   btncolor);
@@ -288,9 +289,9 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                     if (selectedIndex == -1) {
                                       // 이 버튼, 즉 앨범을 누를 떄, 정보가 넘어갑니다. 이것은요, 이 페이지 안에서 체크 되는 것을 저장하기 위한 것입니다.
                                       BlocProvider.of<
-                                                  MusicListArtistPageInfoCubits>(
+                                                  MusicListAlbumPageInfoCubits>(
                                               context)
-                                          .addMusicListArtistPageInfo(
+                                          .addMusicListAlbumPageInfo(
                                               widget.info.name,
                                               index,
                                               btncolor);
@@ -301,7 +302,7 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                                     });
 
                                     // 음악을 누르면 스크롤이 거기로 이동함. 아시죠?
-                                    _musicListArtistcontroller.animateTo(
+                                    _musicListAlbumcontroller.animateTo(
                                         index * 60.0,
                                         duration: Duration(milliseconds: 200),
                                         curve: Curves.easeInOut);
@@ -374,123 +375,8 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                     ),
                   )),
 
-              // 하단의 메뉴
-              // Positioned(
-              //     bottom: 20,
-              //     left: 20,
-              //     right: 20,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         GestureDetector(
-              //           onTap: () {
-              //             var list =
-              //                 BlocProvider.of<MusicListArtistPageInfoCubits>(
-              //                         context)
-              //                     .state;
-              //
-              //             if (list.isEmpty) {
-              //               setState(() {
-              //                 color = Colors.red;
-              //               });
-              //
-              //               BlocProvider.of<MusicListArtistPageInfoCubits>(
-              //                       context)
-              //                   .updateMusicListArtistPageWish(
-              //                       widget.info.name, selectedIndex, color);
-              //             } else {
-              //               for (int i = 0; i < list.length; i++) {
-              //                 if (list[i].name == widget.info.name) {
-              //                   if (list[i].color == Colors.red) {
-              //                     Future.delayed(Duration.zero, () {
-              //                       BlocProvider.of<
-              //                                   MusicListArtistPageInfoCubits>(
-              //                               context)
-              //                           .updateMusicListArtistPageWish(
-              //                               widget.info.name,
-              //                               selectedIndex,
-              //                               color);
-              //                     });
-              //                     setState(() {
-              //                       color = Colors.white70;
-              //                     });
-              //                     return;
-              //                   } else if (color == Colors.white70) {
-              //                     setState(() {
-              //                       color = Colors.red;
-              //                     });
-              //                     BlocProvider.of<
-              //                                 MusicListArtistPageInfoCubits>(
-              //                             context)
-              //                         .updateMusicListArtistPageWish(
-              //                             widget.info.name,
-              //                             selectedIndex,
-              //                             color);
-              //                     return;
-              //                   }
-              //                 } else {
-              //                   if (color == Colors.white70) {
-              //                     setState(() {
-              //                       color = Colors.red;
-              //                     });
-              //                     BlocProvider.of<
-              //                                 MusicListArtistPageInfoCubits>(
-              //                             context)
-              //                         .updateMusicListArtistPageWish(
-              //                             widget.info.name,
-              //                             selectedIndex,
-              //                             color);
-              //                   } else {
-              //                     setState(() {
-              //                       color = Colors.white70;
-              //                     });
-              //                     BlocProvider.of<
-              //                                 MusicListArtistPageInfoCubits>(
-              //                             context)
-              //                         .updateMusicListArtistPageWish(
-              //                             widget.info.name,
-              //                             selectedIndex,
-              //                             color);
-              //                   }
-              //                 }
-              //               }
-              //             }
-              //           },
-              //           child: MusicListArtistPageAddButtons(
-              //               isIcon: true,
-              //               icon: Icons.star_rounded,
-              //               size: 60,
-              //               color: color!,
-              //               backgraundColor: Colors.transparent,
-              //               borderColor: color!),
-              //         ),
-              //         SizeBoxW05(),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.skip_previous,
-              //           iconColor: Colors.white,
-              //           iconSize: 35,
-              //           backColor: Colors.transparent,
-              //         ),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.play_arrow,
-              //           iconColor: Colors.white,
-              //           iconSize: 40,
-              //           backColor: Colors.white12,
-              //         ),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.skip_next,
-              //           iconColor: Colors.white,
-              //           iconSize: 35,
-              //           backColor: Colors.transparent,
-              //         ),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.replay,
-              //           iconColor: Colors.white,
-              //           iconSize: 30,
-              //           backColor: Colors.transparent,
-              //         )
-              //       ],
-              //     )),
+              // 앨범의 자켓 이미지.(생성자 만들어서 이미지 전달하시면 됩니다.)
+              MusicListPageAlbumJacketImg(imgAsset: widget.imgAsset)
             ],
           )),
     );

@@ -16,48 +16,74 @@ import 'package:flutter_test_project/widgets/global_keys.dart';
 // }
 //
 // class _MainPageState extends State<MainPage> {
-//   List pages = [
+//   int currentIndex = 0;
+//
+//   final List<Widget> pages = [
 //     HomePage(),
-//     BarItemPage(),
-//     SearchPage(),
+//     RankPage(),
+//     VideoPage(),
 //     MyPage(),
 //   ];
 //
-//   int currentIndex = 0;
-//
 //   void onTap(int index) {
-//     setState(() {
-//       currentIndex = index;
-//     });
+//     if (index == currentIndex) {
+//       navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
+//     } else {
+//       setState(() {
+//         currentIndex = index;
+//       });
+//     }
+//   }
+//
+//   BottomNavigationBarItem _buildNavItem(IconData icon, String label) {
+//     return BottomNavigationBarItem(
+//       icon: Icon(icon, size: 35),
+//       label: label,
+//     );
 //   }
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.grey[900],
-//       body: pages[currentIndex],
-//       bottomNavigationBar: BottomNavigationBar(
-//         unselectedFontSize: 0,
-//         selectedFontSize: 0,
-//         type: BottomNavigationBarType.fixed,
-//         backgroundColor: Colors.transparent,
-//         onTap: onTap,
-//         currentIndex: currentIndex,
-//         selectedItemColor: Colors.white,
-//         unselectedItemColor: Colors.grey.withOpacity(0.5),
-//         showUnselectedLabels: false,
-//         showSelectedLabels: false,
-//         elevation: 0,
-//         items: [
-//           BottomNavigationBarItem(
-//               label: "Home", icon: Icon(Icons.home_filled, size: 35)),
-//           BottomNavigationBarItem(
-//               label: "Bar", icon: Icon(Icons.bar_chart_sharp, size: 35)),
-//           BottomNavigationBarItem(
-//               label: "Search", icon: Icon(Icons.subscriptions, size: 35)),
-//           BottomNavigationBarItem(
-//               label: "My", icon: Icon(Icons.library_music, size: 35)),
-//         ],
+//     return WillPopScope(
+//       onWillPop: () async {
+//         final currentNavigator = navigatorKeys[currentIndex].currentState;
+//         if (currentNavigator!.canPop()) {
+//           currentNavigator.pop();
+//           return false;
+//         }
+//         return true;
+//       },
+//       child: Scaffold(
+//         backgroundColor: Colors.black87,
+//         body: IndexedStack(
+//           index: currentIndex,
+//           children: pages
+//               .map((page) => Navigator(
+//                     key: navigatorKeys[pages.indexOf(page)],
+//                     onGenerateRoute: (settings) =>
+//                         MaterialPageRoute(builder: (_) => page),
+//                   ))
+//               .toList(),
+//         ),
+//         bottomNavigationBar: BottomNavigationBar(
+//           unselectedFontSize: 0,
+//           selectedFontSize: 0,
+//           type: BottomNavigationBarType.fixed,
+//           backgroundColor: Colors.black.withOpacity(0.9),
+//           onTap: onTap,
+//           currentIndex: currentIndex,
+//           selectedItemColor: Colors.white,
+//           unselectedItemColor: Colors.grey.withOpacity(0.5),
+//           showUnselectedLabels: false,
+//           showSelectedLabels: false,
+//           elevation: 0,
+//           items: [
+//             _buildNavItem(Icons.home_filled, "Home"),
+//             _buildNavItem(Icons.bar_chart_sharp, "Rank"),
+//             _buildNavItem(Icons.subscriptions, "Search"),
+//             _buildNavItem(Icons.library_music, "My"),
+//           ],
+//         ),
 //       ),
 //     );
 //   }
@@ -71,6 +97,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool bottomsheet = false;
+  bool isBottomBarVisible = true; // BottomNavigationBar의 표시 상태를 관리하는 변수
   int currentIndex = 0;
 
   final List<Widget> pages = [
@@ -78,6 +106,13 @@ class _MainPageState extends State<MainPage> {
     RankPage(),
     VideoPage(),
     MyPage(),
+  ];
+
+  final List<GlobalKey<NavigatorState>> navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
   ];
 
   void onTap(int index) {
@@ -97,6 +132,12 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  void toggleBottomBarVisibility() {
+    setState(() {
+      isBottomBarVisible = !isBottomBarVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -109,35 +150,63 @@ class _MainPageState extends State<MainPage> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.black87,
-        body: IndexedStack(
-          index: currentIndex,
-          children: pages
-              .map((page) => Navigator(
-                    key: navigatorKeys[pages.indexOf(page)],
-                    onGenerateRoute: (settings) =>
-                        MaterialPageRoute(builder: (_) => page),
-                  ))
-              .toList(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedFontSize: 0,
-          selectedFontSize: 0,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.black.withOpacity(0.9),
-          onTap: onTap,
-          currentIndex: currentIndex,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey.withOpacity(0.5),
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
-          elevation: 0,
-          items: [
-            _buildNavItem(Icons.home_filled, "Home"),
-            _buildNavItem(Icons.bar_chart_sharp, "Rank"),
-            _buildNavItem(Icons.subscriptions, "Search"),
-            _buildNavItem(Icons.library_music, "My"),
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            IndexedStack(
+              index: currentIndex,
+              children: pages
+                  .map((page) => Navigator(
+                        key: navigatorKeys[pages.indexOf(page)],
+                        onGenerateRoute: (settings) =>
+                            MaterialPageRoute(builder: (_) => page),
+                      ))
+                  .toList(),
+            ),
+            if (bottomsheet)
+              GestureDetector(
+                onTap: toggleBottomBarVisibility, // 탭 이벤트 처리
+                child: DraggableScrollableSheet(
+                  initialChildSize: 0.09, // 10% of screen height initially
+                  minChildSize: 0.09, // 10% of screen height at minimum
+                  maxChildSize: 0.8, // 80% of screen height at maximum
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return Container(
+                      width: 100,
+                      color: Colors.purple[900],
+                    );
+                  },
+                ),
+              ),
           ],
+        ),
+        bottomNavigationBar: AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          height: isBottomBarVisible ? 55.0 : 0.0, // 애니메이션 적용
+          child: Wrap(
+            children: <Widget>[
+              BottomNavigationBar(
+                unselectedFontSize: 0,
+                selectedFontSize: 0,
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.black.withOpacity(0.9),
+                onTap: onTap,
+                currentIndex: currentIndex,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.grey.withOpacity(0.5),
+                showUnselectedLabels: false,
+                showSelectedLabels: false,
+                elevation: 0,
+                items: [
+                  _buildNavItem(Icons.home_filled, "Home"),
+                  _buildNavItem(Icons.bar_chart_sharp, "Rank"),
+                  _buildNavItem(Icons.subscriptions, "Search"),
+                  _buildNavItem(Icons.library_music, "My"),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -31,8 +31,9 @@ class PlayBackHistory extends StatelessWidget {
       child: PageView(
         controller: playBackHistoryPageController,
         children: [
-          _buildRankList(context, 0, 4), // 1-4위
-          _buildRankList(context, 4, 8), // 5-8위
+          _buildRankList(context, 0, 4),
+          _buildRankList(context, 4, 8),
+          _buildRankList(context, 8, 12)
         ],
       ),
     );

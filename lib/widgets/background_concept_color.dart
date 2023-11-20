@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
 class BackgroundConceptColor extends StatelessWidget {
-  const BackgroundConceptColor({super.key});
+  final Color? backgroundColor;
+  const BackgroundConceptColor(
+      {super.key, this.backgroundColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Colors.black,
-        Colors.black,
-        Colors.black,
-        Colors.black,
-        Colors.black
-      ],
-      stops: [0.0, 0.3, 0.5, 0.7, 1.0],
-    )));
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.transparent,
+          Colors.black, // 끝 색상
+        ],
+        stops: [0.1, 0.5], // 각 색상이 위치할 지점
+      )),
+      child: Container(decoration: BoxDecoration(color: backgroundColor!)),
+    );
   }
 }
 
@@ -73,7 +76,7 @@ class BackgroundConceptColor extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     // 그라데이션의 stops를 애니메이션 값에 따라 조정
 //     double width = _widthAnimation.value;
-//     final stops = [0.0, 1.0 - width, 1.0, 1.0 + width, 1.0];
+//     final stops = [0.0, 0.91 - width, 0.91, 0.91 + width, 1.0];
 //
 //     return Scaffold(
 //       body: Container(

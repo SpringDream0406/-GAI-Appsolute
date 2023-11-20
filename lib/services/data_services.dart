@@ -4,6 +4,7 @@ import 'package:flutter_test_project/models/test_model.dart';
 import 'package:http/http.dart' as http;
 
 class DataServices {
+  // AppCubits로 던집니다.
   String baseurl = "https://jsonplaceholder.typicode.com/users";
 
   Future<List<TestModel>> getInfo() async {

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
+import 'package:flutter_test_project/pages/welcome_page/widgets/producer.dart';
+import 'package:flutter_test_project/pages/welcome_page/widgets/signup_page.dart';
+import 'package:flutter_test_project/pages/welcome_page/widgets/welcome_page_dot.dart';
+import 'package:flutter_test_project/pages/welcome_page/widgets/welcome_page_login_join_input.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
-import 'package:flutter_test_project/widgets/app_text.dart';
-import 'package:flutter_test_project/widgets/responsive_button.dart';
+import 'package:flutter_test_project/widgets/login_button.dart';
+import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -13,87 +17,185 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  // 이미지 목록
   List images = ['backimg44.png', 'backimg22.png', 'backimg11.png'];
+
+  // 사용자 입력을 저장할 변수
+  String _userId = "";
+  String _password = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: images.length,
-          itemBuilder: (_, index) {
-            return Container(
-              width: double.maxFinite,
-              height: double.maxFinite,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage("assets/" + images[index]),
-                fit: BoxFit.cover,
-              )),
-              child: Container(
-                margin: const EdgeInsets.only(top: 120, left: 20, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppLargeText(text: "감성기반 음악추천"),
-                        AppLargeText(text: "상황기반 음악추천", color: Colors.white),
-                        AppLargeText(text: "장소기반 음악추천", color: Colors.white54),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: 250,
-                          child: AppText(
-                            text:
-                                "음악이 필요한 순간, 당신의 감정을 읽어드립니다! 취향 저격 플레이리스트로 하루를 업그레이드하세요. 지금 시작하면, 새로운 음악의 세계가 당신을 기다립니다.",
-                            color: Colors.white,
-                            size: 17,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<AppCubits>(context).getData();
-                          },
-                          child: Container(
-                              width: 200,
-                              child: Row(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Container(
+              color: Colors.black87,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: PageView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: images.length,
+                  itemBuilder: (_, index) {
+                    return Container(
+                      width: double.maxFinite,
+                      height: double.maxFinite,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage("assets/" + images[index]),
+                        fit: BoxFit.cover,
+                      )),
+                      child: Container(
+                        width: 500,
+                        height: MediaQuery.of(context).size.height,
+                        margin: const EdgeInsets.only(
+                            top: 120, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (index == 0)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ResponsiveButton(
-                                    width: 120,
-                                  )
+                                  AppLargeText(text: "인공지능 성향분석"),
+                                  AppLargeText(text: "음악추천 플레이어"),
+                                  AppLargeText(
+                                      text: "SEB'S MUSIC",
+                                      size: 40,
+                                      color: Colors.white),
+                                  SizeBoxH40(),
+                                  AppLargeText(
+                                      text: "로그인",
+                                      size: 28,
+                                      color: Colors.white),
+                                  SizeBoxH20(),
+                                  CustomTextField(
+                                    label: 'ID',
+                                    hint: '아이디를 입력하세요.',
+                                    onChanged: (value) {
+                                      _userId = value;
+                                    },
+                                  ),
+                                  SizeBoxH10(),
+                                  CustomTextField(
+                                    label: 'PASSWORD',
+                                    hint: '패스워드를 입력하세요.',
+                                    isObscure: true,
+                                    onChanged: (value) {
+                                      _password = value;
+                                    },
+                                  ),
+                                  SizeBoxH15(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<AppCubits>(context)
+                                          .getData();
+                                    },
+                                    child: LoginButton(text: "Login"),
+                                  ),
                                 ],
-                              )),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: List.generate(3, (indexDots) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          width: 8,
-                          // 웰컴 페이지 상단 오른쪽 위치표시 바 조건식으로, 현재 페이지의 속성에 따라 다른 모양이 나오게 하였다.
-                          height: index == indexDots ? 25 : 8,
-                          decoration: BoxDecoration(
-                              // 위치 표시의 테두리를 둥글게 만든다.
-                              borderRadius: BorderRadius.circular(8),
-                              // 현재 페이지가 아닌 페이지는 반투명으로 나오게 하였다.
-                              color: index == indexDots
-                                  ? Colors.white
-                                  : Colors.white.withOpacity(0.5)),
-                        );
-                      }),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }),
+                              ),
+                            if (index == 1)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppLargeText(text: "인공지능 성향분석"),
+                                  AppLargeText(text: "음악추천 플레이어"),
+                                  AppLargeText(
+                                      text: "SEB'S MUSIC",
+                                      size: 40,
+                                      color: Colors.white),
+                                  SizeBoxH40(),
+                                  AppLargeText(
+                                      text: "회원가입",
+                                      size: 28,
+                                      color: Colors.white),
+                                  SizeBoxH30(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation,
+                                                  secondaryAnimation) =>
+                                              SignUpPage(),
+                                          transitionsBuilder: (context,
+                                              animation,
+                                              secondaryAnimation,
+                                              child) {
+                                            const begin = Offset(1.0, 0.0);
+                                            const end = Offset.zero;
+                                            const curve = Curves.ease;
+
+                                            var tween = Tween(
+                                                    begin: begin, end: end)
+                                                .chain(
+                                                    CurveTween(curve: curve));
+                                            var offsetAnimation =
+                                                animation.drive(tween);
+
+                                            return SlideTransition(
+                                              position: offsetAnimation,
+                                              child: child,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: LoginButton(
+                                      text: "Sign Up",
+                                      circular: 10,
+                                    ),
+                                  ),
+                                  SizeBoxH15(),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.7,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/kakao_login_large_narrow.png"),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey.withOpacity(0.5)),
+                                  ),
+                                  SizeBoxH15(),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.7,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/google_login.png"),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey.withOpacity(0.9)),
+                                  ),
+                                ],
+                              ),
+                            if (index == 2) ProducerBox(),
+                            Column(
+                              children: List.generate(3, (indexDots) {
+                                return DotIndicator(
+                                  index: indexDots,
+                                  currentIndex: index,
+                                );
+                              }),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

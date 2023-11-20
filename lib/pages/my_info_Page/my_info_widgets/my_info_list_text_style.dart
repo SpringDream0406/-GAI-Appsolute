@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_project/models/test_model.dart';
-import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/music_list_album_page.dart';
+import 'package:flutter_test_project/pages/music_list_artist_page/music_list_artist_page.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
-
-import '../../music_list_page/music_list_page.dart';
 
 class myInfoListTextStyle extends StatelessWidget {
   final List<String> sing;
@@ -31,11 +30,21 @@ class myInfoListTextStyle extends StatelessWidget {
         itemBuilder: (_, index) {
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => MusicListPage(info: info[index]),
-                ),
-              );
+              randomNumberlist[index] == 1
+                  ? Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MusicListArtistPage(
+                            info: info[index],
+                            imgAsset: "assets/all/" + song[index]),
+                      ),
+                    )
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MusicListAlbumPage(
+                            info: info[index],
+                            imgAsset: "assets/sing/" + sing[index]),
+                      ),
+                    );
             },
             child: Container(
               height: 80,

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/pages/edit_my_information_page/edit_my_information_page.dart';
+import 'package:flutter_test_project/pages/search_page/search_page.dart';
 
 class OurAppBar extends StatelessWidget {
-  const OurAppBar({super.key});
+  final Color? backgroundColor;
+  const OurAppBar({super.key, this.backgroundColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-        backgroundColor: Colors.black,
-        expandedHeight: 30.0,
-        floating: false,
-        pinned: true,
+        backgroundColor: backgroundColor!,
+        expandedHeight: 56.0,
+        floating: true,
+        pinned: false,
         primary: true,
         actions: [
           Container(
@@ -45,21 +48,70 @@ class OurAppBar extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton.outlined(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        SearchPage(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(0.0, -1.0);
+                                  const end = Offset.zero;
+                                  const curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  var offsetAnimation = animation.drive(tween);
+
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          },
                           icon: Icon(
                             Icons.search,
                             size: 30,
                           )),
-                      Container(
-                        margin: const EdgeInsets.only(right: 15),
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/face.png"),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.grey.withOpacity(0.5)),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      EditMyInformationPage(),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(1.0, 0.0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 15),
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("assets/face.png"),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.withOpacity(0.5)),
+                        ),
                       )
                     ],
                   ),

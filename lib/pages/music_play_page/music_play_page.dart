@@ -17,7 +17,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MusicPlayPage extends StatefulWidget {
-  final TestModel info;
+  final TestModel? info;
   const MusicPlayPage({super.key, required this.info});
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubit_logics.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
+import 'package:flutter_test_project/pages/music_list_album_page/cubit/music_list_album_page_info_cubits.dart';
 import 'package:flutter_test_project/pages/music_list_artist_page/cubit/music_list_artist_page_info_cubits.dart';
 import 'package:flutter_test_project/pages/music_list_page/cubit/music_list_page_info_cubits.dart';
 import 'package:flutter_test_project/services/data_services.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<MusicListArtistPageInfoCubits>(
               create: (context) => MusicListArtistPageInfoCubits(),
+            ),
+            BlocProvider<MusicListAlbumPageInfoCubits>(
+              create: (context) => MusicListAlbumPageInfoCubits(),
             )
           ],
           child: const AppCubitLogics(),

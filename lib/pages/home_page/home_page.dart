@@ -11,8 +11,11 @@ import 'package:flutter_test_project/pages/home_page/widgets/homepage_user_custo
 import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_category.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_title_text.dart';
+import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_top_button.dart';
 import 'package:flutter_test_project/widgets/app_our_bar.dart';
+import 'package:flutter_test_project/widgets/app_our_list_bar.dart';
 import 'package:flutter_test_project/widgets/background_concept_color.dart';
+import 'package:flutter_test_project/widgets/background_concept_img.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +39,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  @override
   final List<String> images = [
     "jan_hon.jpeg",
     "jan_le.jpeg",
@@ -69,63 +71,107 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "몽키",
     "소곡집2"
   ];
+  final List<String> menu = [
+    "휴식",
+    "행복한 기분",
+    "에너지 충전",
+    "집중",
+    "운동",
+    "출퇴근길",
+    "로멘스",
+    "슬픔",
+    "파티",
+    "잠잘 때"
+  ];
 
-  Widget build(BuildContext context) {
+  String? currentImagePath; // 초기 이미지 경로
+  String? selectedMenu; // 현재 선택된 메뉴 추적
+
+  void _handleMenuSelection(String menu) {
+    setState(() {
+      if (selectedMenu == menu) {
+        // 이미 선택된 메뉴를 다시 클릭한 경우
+        currentImagePath = null; // 이미지 경로를 null로 설정하여 검은색 배경 표시
+        selectedMenu = null; // 선택된 메뉴 상태도 초기화
+      } else {
+        // 새로운 메뉴를 선택한 경우
+        currentImagePath = "assets/bgimg/${menu}.jpeg"; // 새 이미지 경로 설정
+        selectedMenu = menu; // 선택된 메뉴 상태 업데이트
+      }
+    });
+  }
+
+  Color backgroundColor = Colors.black.withOpacity(0);
+
+  @override
+  build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[900],
-      body: Stack(children: [
-        BackgroundConceptColor(),
-        CustomScrollView(slivers: <Widget>[
-          OurAppBar(),
-          SliverToBoxAdapter(
-            child: Container(
-              // height: MediaQuery.of(context).size.height,
-              height: 1350,
-              width: MediaQuery.of(context).size.width,
-              child: BlocBuilder<AppCubits, CubitStates>(
-                builder: (context, state) {
-                  if (state is LoadedState) {
-                    var info = state.places;
-
-                    return SingleChildScrollView(
-                      physics: ClampingScrollPhysics(),
-                      child: Column(
+      backgroundColor: Colors.black,
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification notification) {
+          if (notification.metrics.axis == Axis.vertical) {
+            // 여기서는 세로 스크롤 알림에만 반응합니다.
+            final double scrollPosition = notification.metrics.pixels;
+            double opacity = (scrollPosition / 100).clamp(0, 1);
+            setState(() {
+              backgroundColor = Colors.black.withOpacity(opacity);
+            });
+          }
+          return true;
+        },
+        child: Stack(children: [
+          BackgroundConceptImg(imagePath: currentImagePath),
+          BackgroundConceptColor(backgroundColor: backgroundColor),
+          CustomScrollView(slivers: <Widget>[
+            OurAppBar(backgroundColor: backgroundColor),
+            OurAppListBar(
+                menu: menu,
+                backgroundColor: backgroundColor,
+                onMenuSelected: _handleMenuSelection),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                // height: MediaQuery.of(context).size.height,
+                height: 1600,
+                width: MediaQuery.of(context).size.width,
+                child: BlocBuilder<AppCubits, CubitStates>(
+                  builder: (context, state) {
+                    if (state is LoadedState) {
+                      var info = state.places;
+                      return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // 페이지의 내용은 여기 있음
                         children: [
                           // "타이틀"(widget)
-                          SizeBoxH40(),
-                          HomePageMainTitle(text: "MUSIC 추천 리스트"),
-                          SizeBoxH15(),
+                          const SizeBoxH30(),
+                          const HomePageMainTitle(text: "MUSIC 추천 리스트"),
+                          const SizeBoxH15(),
 
                           // 신곡 추천 리스트 나열 됨.
                           // TabBar
-                          Container(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: TabBar(
-                                labelPadding:
-                                    EdgeInsets.only(left: 15, right: 0),
-                                controller: _tabController,
-                                labelColor: Colors.white,
-                                unselectedLabelColor: Colors.white60,
-                                isScrollable: true,
-                                indicatorSize: TabBarIndicatorSize.label,
-                                labelStyle: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                indicator: CircleTabIndicator(
-                                    color: Colors.white, radius: 5),
-                                tabs: [
-                                  Tab(text: "PLACE"),
-                                  Tab(text: "ENVIRONMENT"),
-                                  Tab(text: "EMOTION"),
-                                ],
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: TabBar(
+                              labelPadding:
+                                  const EdgeInsets.only(left: 15, right: 0),
+                              controller: _tabController,
+                              labelColor: Colors.white,
+                              unselectedLabelColor: Colors.white60,
+                              isScrollable: true,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              labelStyle: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w400,
                               ),
+                              indicator: CircleTabIndicator(
+                                  color: Colors.white, radius: 5),
+                              tabs: const [
+                                Tab(text: "PLACE"),
+                                Tab(text: "ENVIRONMENT"),
+                                Tab(text: "EMOTION"),
+                              ],
                             ),
                           ),
-                          SizeBoxH15(),
+                          const SizeBoxH15(),
 
                           // 추천 리스트를 담은 박스
                           Container(
@@ -146,11 +192,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          SizeBoxH40(),
+                          const SizeBoxH40(),
 
                           // "내가 들은 노래 리스트"를 나열 해준다. (widget)
-                          HomePageSubTitleAndIcon(text: '재생 목록'),
-                          SizeBoxH25(),
+                          const HomePageSubTitleAndIcon(text: '재생 목록'),
+                          const SizeBoxH25(),
 
                           // 재생되었던 목록을 만들었습니다.
                           PlayBackHistory(
@@ -158,31 +204,61 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             images: images,
                             titles: titles,
                           ),
-                          SizeBoxH40(),
+                          const SizeBoxH40(),
 
                           // "유저가 만든 리스트"를 나열해준다. (widget)
-                          HomePageSubTitleAndIcon(text: "유저가 만든 리스트"),
-                          SizeBoxH25(),
+                          const HomePageSubTitleAndIcon(text: "유저가 만든 리스트"),
+                          const SizeBoxH25(),
                           UserCustomMusicList(info: info),
 
-                          SizeBoxH40(),
-                          RankPageTitleText(
+                          const SizeBoxH40(),
+                          const RankPageTitleText(
                             text: "분위기 및 장르",
                           ),
-                          SizeBoxH20(),
-                          CategoryList()
+
+                          const SizeBoxH20(),
+                          CategoryList(),
+
+                          const SizeBoxH40(),
+                          const RankPageTitleText(
+                            text: "둘러보기",
+                          ),
+
+                          const SizeBoxH20(),
+                          Container(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: const Row(
+                              children: [
+                                Expanded(
+                                    child: RankPageTopButton(
+                                  text: "최신음악",
+                                  icon: Icons.brightness_5,
+                                )),
+                                Expanded(
+                                    child: RankPageTopButton(
+                                  text: "차트",
+                                  icon: Icons.trending_up,
+                                )),
+                                Expanded(
+                                    child: RankPageTopButton(
+                                  text: "최신 음악",
+                                  icon: Icons.sentiment_very_satisfied_rounded,
+                                )),
+                              ],
+                            ),
+                          ),
                         ],
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
               ),
             ),
-          ),
+          ]),
         ]),
-      ]),
+      ),
     );
   }
 }

@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubit_states.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
+import 'package:flutter_test_project/pages/edit_my_information_page/edit_my_information_page.dart';
 import 'package:flutter_test_project/pages/my_info_Page/my_info_widgets/my_info_list_icon_style.dart';
 import 'package:flutter_test_project/pages/my_info_Page/my_info_widgets/my_info_list_text_style.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/app_our_bar.dart';
+import 'package:flutter_test_project/widgets/app_our_list_bar.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
 import 'package:flutter_test_project/widgets/background_concept_color.dart';
+import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -53,6 +56,7 @@ class _MyPageState extends State<MyPage> {
       "77.jpeg",
       "88.png"
     ];
+    final List<String> menu = ["재생목록", "노래", "앨범", "아티스트", "팟캐스트"];
 
     return Scaffold(
       // backgroundColor: Colors.grey[900],
@@ -60,6 +64,7 @@ class _MyPageState extends State<MyPage> {
         BackgroundConceptColor(),
         CustomScrollView(slivers: <Widget>[
           OurAppBar(),
+          OurAppListBar(menu: menu),
           SliverToBoxAdapter(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -70,43 +75,8 @@ class _MyPageState extends State<MyPage> {
 
                     return Column(
                       children: [
-                        // 환영 타이틀.
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 80,
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[900],
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppLargeText(
-                                text: "###님 환영합니다.",
-                                color: Colors.white,
-                                size: 22,
-                              ),
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  color: Colors.blue,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-
                         // 최근활동 버튼
-                        SizedBox(
-                          height: 30,
-                        ),
+                        const SizeBoxH10(),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.only(left: 15, right: 15),
@@ -142,9 +112,7 @@ class _MyPageState extends State<MyPage> {
                         ),
 
                         // 마이 리스트 정렬
-                        SizedBox(
-                          height: 30,
-                        ),
+                        const SizeBoxH15(),
 
                         listStayle == false
                             ? myInfoListTextStyle(
@@ -158,6 +126,8 @@ class _MyPageState extends State<MyPage> {
                                 song: song,
                                 randomNumberlist: randomNumberlist,
                                 info: info),
+                        SizeBoxH40(),
+                        SizeBoxH40()
                       ],
                     );
                   } else {

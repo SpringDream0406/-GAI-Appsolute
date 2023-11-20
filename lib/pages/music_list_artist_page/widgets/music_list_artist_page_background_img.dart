@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MusicListArtistBackground extends StatelessWidget {
-  const MusicListArtistBackground({super.key});
+  final String imgAsset;
+  const MusicListArtistBackground({super.key, required this.imgAsset});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,10 @@ class MusicListArtistBackground extends StatelessWidget {
           height: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/all/11.jpeg'),
+              image: AssetImage(imgAsset),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.5), // 반투명한 검은색
+                Colors.black.withOpacity(0.1), // 반투명한 검은색
                 BlendMode.overlay, // 오버레이 모드
               ),
             ),
