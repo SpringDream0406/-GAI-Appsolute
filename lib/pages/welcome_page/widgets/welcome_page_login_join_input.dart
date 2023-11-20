@@ -7,11 +7,13 @@ class CustomTextField extends StatelessWidget {
   final bool isObscure;
   final IconData? icon;
   final Function(String) onChanged;
+  final double? width;
   final int? maxLength;
 
   const CustomTextField(
       {Key? key,
       this.maxLength = 12,
+      this.width = 1.7,
       required this.label,
       required this.hint,
       this.isObscure = false,
@@ -22,7 +24,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.7,
+      width: MediaQuery.of(context).size.width / width!,
       height: 50,
       child: TextField(
         maxLength: maxLength,
@@ -30,7 +32,7 @@ class CustomTextField extends StatelessWidget {
         onChanged: onChanged,
         textAlignVertical: TextAlignVertical.bottom,
         style: TextStyle(
-            color: Colors.white, fontSize: 20, decorationThickness: 0),
+            color: Colors.white, fontSize: 18, decorationThickness: 0),
         decoration: InputDecoration(
           counterText: '',
           filled: true,
@@ -38,8 +40,7 @@ class CustomTextField extends StatelessWidget {
           labelText: label,
           hintText: hint,
           hintStyle: TextStyle(color: Colors.white),
-          labelStyle:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(color: Colors.white),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             borderSide: BorderSide(width: 1, color: Colors.white),

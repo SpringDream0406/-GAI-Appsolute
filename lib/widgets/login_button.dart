@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class LoginButton extends StatelessWidget {
+  final double? width;
   final String text;
   final double circular;
-  const LoginButton({super.key, required this.text, this.circular = 15});
+  const LoginButton(
+      {super.key, this.width = 1.7, required this.text, this.circular = 15});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 15),
-      width: MediaQuery.of(context).size.width / 1.7,
+      width: MediaQuery.of(context).size.width / width!,
       height: 50,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.purple),
