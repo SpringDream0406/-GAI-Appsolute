@@ -9,18 +9,18 @@ class UserSignUpService {
     required String userAge,
     required String userGender,
   }) async {
-    var url = Uri.parse('https://서버주소.com/거시기'); // HTTPS URL로 변경해야 함~~
+    var url = Uri.parse('http://192.168.70.65:3300/user/join'); // HTTPS URL로 변경해야 함~~
 
     try {
       var response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'userId': userId,
-          'password': userPw,
-          'nickname': userNick,
-          'age': userAge,
-          'gender': userGender,
+          'user_id': userId,
+          'user_pw': userPw,
+          'user_nick': userNick,
+          'user_age': userAge,
+          'user_gender': userGender,
         }),
       );
 
