@@ -176,19 +176,6 @@ class _WelcomePageState extends State<WelcomePage> {
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.grey.withOpacity(0.9)),
                                   ),
-                                  SizeBoxH15(),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.7,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/naver_login.png"),
-                                            fit: BoxFit.cover),
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.grey.withOpacity(0.9)),
-                                  ),
                                 ],
                               ),
                             if (index == 2) ProducerBox(),
