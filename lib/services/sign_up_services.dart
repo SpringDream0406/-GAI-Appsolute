@@ -17,11 +17,11 @@ class UserSignUpService {
         url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'user_id': userId,
-          'user_pw': userPw,
-          'user_nick': userNick,
-          'user_age': userAge,
-          'user_gender': userGender,
+          'userId': userId,
+          'password': userPw,
+          'nickname': userNick,
+          'age': userAge,
+          'gender': userGender,
         }),
       );
 
