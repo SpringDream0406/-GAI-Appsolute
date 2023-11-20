@@ -6,43 +6,6 @@ import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/login_button.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
-import 'package:http/http.dart' as http;
-
-class UserSignUpService {
-  static Future<void> signUp({
-    required String userId,
-    required String userPw,
-    required String userNick,
-    required String userAge,
-    required String userGender,
-  }) async {
-    // 서버 주소와 엔드포인트를 적절하게 설정
-    final String serverUrl = 'http://192.168.70.65:3300';
-    final String endpoint = '/user/join';
-
-    // HTTP 요청 수행
-    final response = await http.post(
-      Uri.parse('$serverUrl$endpoint'),
-      body: {
-        'user_id': userId,
-        'user_pw': userPw,
-        'user_nick': userNick,
-        'user_age': userAge,
-        'user_gender': userGender,
-      },
-    );
-
-    // 응답 처리
-    if (response.statusCode == 200) {
-      // 성공적으로 처리된 경우 -
-      print('회원가입 성공');
-    } else {
-      // 실패한 경우
-      print('회원가입 실패 - ${response.statusCode}');
-    }
-  }
-}
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
