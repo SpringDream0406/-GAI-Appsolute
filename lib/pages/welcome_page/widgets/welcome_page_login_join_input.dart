@@ -24,9 +24,6 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         obscureText: isObscure,
         onChanged: onChanged,
-        textAlignVertical: TextAlignVertical.bottom,
-        style: TextStyle(
-            color: Colors.white, fontSize: 20, decorationThickness: 0),
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.black54,
