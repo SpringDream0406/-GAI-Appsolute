@@ -11,6 +11,7 @@ class OurAppBar extends StatelessWidget {
     return SliverAppBar(
         backgroundColor: backgroundColor!,
         expandedHeight: 56.0,
+        elevation: 0,
         floating: true,
         pinned: false,
         primary: true,

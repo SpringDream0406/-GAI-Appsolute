@@ -25,6 +25,7 @@ class _OurAppListBarState extends State<OurAppListBar> {
     return SliverAppBar(
       backgroundColor: widget.backgroundColor!,
       toolbarHeight: 68,
+      elevation: 0,
       floating: false,
       pinned: true,
       primary: true,
