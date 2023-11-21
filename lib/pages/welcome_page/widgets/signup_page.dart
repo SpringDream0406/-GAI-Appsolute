@@ -25,14 +25,14 @@ class _SignUpPageState extends State<SignUpPage> {
     'userGender': '',
   };
 
+  bool hasValidIdLength = false;
   bool hasSpecialCharacter = false;
   bool hasUpperCase = false;
-  bool hasMinLength = false;
+  bool hasValidLength = false;
 
-  Widget _buildPasswordRequirements(String password) {
-    hasSpecialCharacter = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
-    hasUpperCase = password.contains(RegExp(r'[A-Z]'));
-    hasMinLength = password.length >= 8;
+  // 아이디 조건식
+  Widget _buildIdRequirements(String id) {
+    hasValidIdLength = id.length >= 4 && id.length <= 12;
 
     return Column(
       children: [
@@ -45,11 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
               color: Colors.black54, borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
-              _buildRequirementText("특수문자 1개 이상", hasSpecialCharacter),
-              Text(" , ", style: TextStyle(color: Colors.white)),
-              _buildRequirementText("대문자 1개 이상", hasUpperCase),
-              Text(" , ", style: TextStyle(color: Colors.white)),
-              _buildRequirementText("8자 이상", hasMinLength),
+              _buildRequirementText("ID는 4글자 이상 ,  12글자 이하", hasValidIdLength),
             ],
           ),
         ),
@@ -57,6 +53,76 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  // 패스워드 조건식
+  Widget _buildPasswordRequirements(String password) {
+    hasSpecialCharacter = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    hasUpperCase = password.contains(RegExp(r'[A-Z]'));
+    hasValidLength = password.length >= 8 && password.length <= 20;
+
+    return Column(
+      children: [
+        SizeBoxH05(),
+        Container(
+          height: 30,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.only(left: 15),
+          decoration: BoxDecoration(
+              color: Colors.black54, borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            children: [
+              _buildRequirementText("특수문자", hasSpecialCharacter),
+              Text(" ,  ", style: TextStyle(color: Colors.white)),
+              _buildRequirementText("대소문자", hasUpperCase),
+              Text(" ,  ", style: TextStyle(color: Colors.white)),
+              _buildRequirementText("8자 이상 - 20자 이하", hasValidLength),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 패스워드 일치 조건식
+  Widget _buildPasswordMatchInfo() {
+    String userPw = _userData['userPw'] ?? '';
+    String userRePw = _userData['userRePw'] ?? '';
+
+    String message;
+    Color textColor;
+
+    if (userRePw.isEmpty) {
+      message = "패스워드를 재입력해주세요.";
+      textColor = Colors.white;
+    } else if (userPw == '') {
+      message = "패스워드 먼저 입력해주세요.";
+      textColor = Colors.red;
+    } else if (userPw == userRePw) {
+      message = "패스워드가 일치합니다.";
+      textColor = Colors.green;
+    } else {
+      message = "패스워드가 일치하지 않습니다.";
+      textColor = Colors.red;
+    }
+
+    return Column(
+      children: [
+        SizeBoxH05(),
+        Container(
+          height: 30,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.only(left: 15, top: 5),
+          decoration: BoxDecoration(
+              color: Colors.black54, borderRadius: BorderRadius.circular(10)),
+          child: Text(
+            message,
+            style: TextStyle(color: textColor),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 컬러 바꾸는 위젯.
   Widget _buildRequirementText(String text, bool isValid) {
     return Text(
       text,
@@ -77,22 +143,25 @@ class _SignUpPageState extends State<SignUpPage> {
             setState(() {
               _userData[key] = value;
               if (key == 'userPw') {
+                // 비밀번호 필드가 변경될 때
                 _buildPasswordRequirements(value);
+              }
+              if (key == 'userId') {
+                // 아이디 필드가 변경될 때
+                _buildIdRequirements(value);
               }
             });
           },
         ),
         if (key == 'userPw') _buildPasswordRequirements(_userData[key] ?? ''),
+        if (key == 'userRePw') _buildPasswordMatchInfo(),
+        // 비밀번호 재입력 필드에 대한 처리 추가
+        if (key == 'userId') _buildIdRequirements(_userData[key] ?? ''),
       ],
     );
   }
 
   bool _validateData() {
-    // 비밀번호 일치 여부 확인
-    if (_userData['userPw'] != _userData['userRePw']) {
-      message = "패스워드가 일치하지 않습니다.";
-      return false;
-    }
     // 모든 입력란이 비어있지 않은지 확인
     for (String key in _userData.keys) {
       if (_userData[key]!.isEmpty) {
@@ -100,6 +169,39 @@ class _SignUpPageState extends State<SignUpPage> {
         return false;
       }
     }
+
+    // 아이디 길이 검증
+    String? userId = _userData['userId'];
+    if (userId == null || userId.length < 4 || userId.length > 12) {
+      message = "아이디는 4자 이상 12자 이하로 설정해주세요.";
+      return false;
+    }
+
+    // 비밀번호 길이 검증
+    String? userPw = _userData['userPw'];
+    if (userPw == null || userPw.length < 8 || userPw.length > 20) {
+      message = "비밀번호는 8자 이상 20자 이하로 설정해주세요.";
+      return false;
+    }
+
+    // 비밀번호에 특수 문자가 포함되어 있는지 확인
+    if (!userPw.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      message = "비밀번호에는 특수 문자가 포함되어야 합니다.";
+      return false;
+    }
+
+    // 비밀번호에 대문자가 포함되어 있는지 확인
+    if (!userPw.contains(RegExp(r'[A-Z]'))) {
+      message = "비밀번호에는 대문자가 포함되어야 합니다.";
+      return false;
+    }
+
+    // 비밀번호 일치 여부 확인
+    if (_userData['userPw'] != _userData['userRePw']) {
+      message = "패스워드가 일치하지 않습니다.";
+      return false;
+    }
+
     return true;
   }
 
@@ -157,8 +259,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         onTap: () async {
                           if (_validateData()) {
                             await UserSignUpService.signUp(
-                              userId: _userData[
-                                  'userId']!, // 이해를 돕기위해 작성함. userId는 UserSignUpService에 전달되는 매개변수입니다.즉 키.!는 널이 아니게 하기위해 넣었구요.
+                              userId: _userData['userId']!,
+                              // 이해를 돕기위해 작성함. userId는 UserSignUpService에 전달되는 매개변수입니다.즉 키.!는 널이 아니게 하기위해 넣었구요.
                               userPw: _userData['userPw']!, //
                               userNick: _userData['userNick']!,
                               userAge: _userData['userAge']!,

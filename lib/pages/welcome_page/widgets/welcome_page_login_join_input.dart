@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
 
   const CustomTextField(
       {Key? key,
-      this.maxLength = 12,
+      this.maxLength = 20,
       this.width = 1.7,
       required this.label,
       required this.hint,
