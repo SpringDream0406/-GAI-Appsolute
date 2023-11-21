@@ -16,7 +16,6 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   late String message;
-
   final Map<String, String> _userData = {
     'userId': '',
     'userPw': '',
@@ -26,16 +25,65 @@ class _SignUpPageState extends State<SignUpPage> {
     'userGender': '',
   };
 
+  bool hasSpecialCharacter = false;
+  bool hasUpperCase = false;
+  bool hasMinLength = false;
+
+  Widget _buildPasswordRequirements(String password) {
+    hasSpecialCharacter = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    hasUpperCase = password.contains(RegExp(r'[A-Z]'));
+    hasMinLength = password.length >= 8;
+
+    return Column(
+      children: [
+        SizeBoxH05(),
+        Container(
+          height: 30,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.only(left: 15),
+          decoration: BoxDecoration(
+              color: Colors.black54, borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            children: [
+              _buildRequirementText("특수문자 1개 이상", hasSpecialCharacter),
+              Text(" , ", style: TextStyle(color: Colors.white)),
+              _buildRequirementText("대문자 1개 이상", hasUpperCase),
+              Text(" , ", style: TextStyle(color: Colors.white)),
+              _buildRequirementText("8자 이상", hasMinLength),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRequirementText(String text, bool isValid) {
+    return Text(
+      text,
+      style: TextStyle(color: isValid ? Colors.green : Colors.red),
+    );
+  }
+
   Widget _buildCustomTextField(
       double width, String label, String hint, bool isObscure, String key) {
-    return CustomTextField(
-      width: width,
-      label: label,
-      hint: hint,
-      isObscure: isObscure,
-      onChanged: (value) {
-        _userData[key] = value;
-      },
+    return Column(
+      children: [
+        CustomTextField(
+          width: width,
+          label: label,
+          hint: hint,
+          isObscure: isObscure,
+          onChanged: (value) {
+            setState(() {
+              _userData[key] = value;
+              if (key == 'userPw') {
+                _buildPasswordRequirements(value);
+              }
+            });
+          },
+        ),
+        if (key == 'userPw') _buildPasswordRequirements(_userData[key] ?? ''),
+      ],
     );
   }
 
@@ -92,7 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizeBoxH10(),
                       _buildCustomTextField(1, 'RE PASSWORD', '패스워드를 다시 입력하세요.',
                           true, 'userRePw'),
-                      SizeBoxH20(),
+                      SizeBoxH10(),
                       _buildCustomTextField(
                           1, '닉네임', '닉네임을 입력하세요.', false, 'userNick'),
                       SizeBoxH10(),
