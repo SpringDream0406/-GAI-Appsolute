@@ -12,6 +12,20 @@ void main() {
   runApp(const MyApp());
 }
 
+class MyCustomScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -25,6 +39,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: false,
           primarySwatch: Colors.blue,
         ),
+        scrollBehavior: MyCustomScrollBehavior(), // 여기에 커스텀 ScrollBehavior 적용
         home: MultiBlocProvider(
           providers: [
             BlocProvider<AppCubits>(
