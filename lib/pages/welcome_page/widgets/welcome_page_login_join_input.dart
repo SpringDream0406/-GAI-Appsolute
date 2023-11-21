@@ -42,15 +42,15 @@ class CustomTextField extends StatelessWidget {
           hintStyle: TextStyle(color: Colors.white),
           labelStyle: TextStyle(color: Colors.white),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(width: 1, color: Colors.white),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(width: 1, color: Colors.white),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
         ),
         keyboardType: TextInputType.emailAddress,
