@@ -8,7 +8,6 @@ import 'package:flutter_test_project/pages/home_page/widgets/homepage_environmen
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_playback_history.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_emotion_recommended_playlist.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_user_custom_music_list.dart';
-import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_category.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_title_text.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_top_button.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_test_project/widgets/app_our_bar.dart';
 import 'package:flutter_test_project/widgets/app_our_list_bar.dart';
 import 'package:flutter_test_project/widgets/background_concept_color.dart';
 import 'package:flutter_test_project/widgets/background_concept_img.dart';
+import 'package:flutter_test_project/widgets/music_list_big_size_widget.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             SliverToBoxAdapter(
               child: SizedBox(
                 // height: MediaQuery.of(context).size.height,
-                height: 1600,
+                // height: 1600,
                 width: MediaQuery.of(context).size.width,
                 child: BlocBuilder<AppCubits, CubitStates>(
                   builder: (context, state) {
@@ -141,6 +141,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // 페이지의 내용은 여기 있음
                         children: [
+                          if (selectedMenu == "휴식") MusicListBigSizePlay(),
                           // "타이틀"(widget)
                           const SizeBoxH30(),
                           const HomePageMainTitle(text: "MUSIC 추천 리스트"),
@@ -247,6 +248,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
+                          const SizeBoxH40(),
+                          const SizeBoxH40(),
                         ],
                       );
                     } else {

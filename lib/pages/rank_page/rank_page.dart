@@ -71,7 +71,6 @@ class _RankPageState extends State<RankPage> {
           OurAppBar(),
           SliverToBoxAdapter(
             child: Container(
-              height: MediaQuery.of(context).size.height + 380,
               width: MediaQuery.of(context).size.width,
               child: BlocBuilder<AppCubits, CubitStates>(
                 builder: (context, state) {
@@ -132,7 +131,9 @@ class _RankPageState extends State<RankPage> {
                           text: "분위기 및 장르",
                         ),
                         SizeBoxH20(),
-                        CategoryList()
+                        CategoryList(),
+                        const SizeBoxH40(),
+                        const SizeBoxH40(),
                       ],
                     );
                   } else {

@@ -35,7 +35,7 @@ class OurAppBar extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.5)),
                       ),
                       Text(
-                        "Sep's Music",
+                        "Seb's Music",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
