@@ -27,30 +27,32 @@ class _EditMyInformationPageState extends State<EditMyInformationPage> {
           EditInformationPageTopBar(),
           Positioned(
               top: 110,
-              left: screenWidth / 2 - 100,
+              left: screenWidth / 2 - 75,
               child: Column(
                 children: [
                   Container(
                     child: Center(
                       child: AppLargeText(
-                        text: "사용자 사진",
+                        text: "HO",
+                        size: 50,
+                        color: Colors.white,
                       ),
                     ),
-                    width: 200,
-                    height: 200,
+                    width: 150,
+                    height: 150,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.purple.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(75),
                     ),
                   ),
-                  SizeBoxH05(),
+                  SizeBoxH10(),
                   AppLargeText(
-                    text: "사용자 이름",
+                    text: "HOHOMEN",
                     color: Colors.white,
                   ),
-                  SizeBoxH05(),
+                  SizeBoxH10(),
                   AppText(
-                    text: "사용자 아이디",
+                    text: "hohomen8939",
                     size: 23,
                   ),
                 ],

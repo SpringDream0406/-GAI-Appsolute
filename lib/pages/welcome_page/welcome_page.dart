@@ -17,6 +17,14 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   // 이미지 목록
   List images = ['backimg44.png', 'backimg22.png', 'backimg11.png'];
 
@@ -38,6 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: PageView.builder(
+                  controller: _pageController,
                   scrollDirection: Axis.vertical,
                   itemCount: images.length,
                   itemBuilder: (_, index) {
@@ -97,6 +106,40 @@ class _WelcomePageState extends State<WelcomePage> {
                                     },
                                     child: LoginButton(text: "Login"),
                                   ),
+                                  SizeBoxH20(),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          _pageController.animateToPage(
+                                            1,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeInOut,
+                                          );
+                                        },
+                                        child: Text(
+                                          " 회원 가입 ",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17),
+                                        ),
+                                      ),
+                                      Text(
+                                        " / ",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 17),
+                                      ),
+                                      GestureDetector(
+                                        child: Text(
+                                          " 계정, 암호 찾기",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17),
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             if (index == 1)

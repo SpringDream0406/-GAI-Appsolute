@@ -51,7 +51,7 @@ class _OurAppListBarState extends State<OurAppListBar> {
   Widget _buildMenuItem(int index) {
     bool isSelected = index == selectedMenuIndex;
     return GestureDetector(
-      onTap: () => _onMenuItemTap(index),
+      onTap: () => {_onMenuItemTap(index)},
       child: Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.only(right: 10, top: 13, bottom: 13),

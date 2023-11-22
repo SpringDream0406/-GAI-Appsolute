@@ -133,7 +133,7 @@ class _ProducerBoxState extends State<ProducerBox>
                         ),
                         SizeBoxH20(),
                         AppLargeText(
-                          text: "Lee DongWon",
+                          text: "Lee DongHeon",
                           color: Colors.white,
                           size: 25,
                         )

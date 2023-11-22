@@ -103,15 +103,20 @@ class OurAppBar extends StatelessWidget {
                           );
                         },
                         child: Container(
+                          child: Center(
+                              child: Text(
+                            "HO",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )),
                           margin: const EdgeInsets.only(right: 15),
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/face.png"),
-                                  fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey.withOpacity(0.5)),
+                              color: Colors.purpleAccent.withOpacity(0.8)),
                         ),
                       )
                     ],
