@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test_project/cubit/app_cubits.dart';
 // import 'package:flutter_test_project/pages/music_play_page/audio_bloc/audio_bloc.dart';
 import 'package:flutter_test_project/pages/main_page/main_page.dart';
 
@@ -27,9 +26,11 @@ class MusicPlayPageTopMenu extends StatelessWidget {
                 // if (audioPlayerBloc.state.isPlaying) {
                 //   audioPlayerBloc.add(PauseAudio());
                 // }
-                // 뮤직플레이어 상태 유지 후 페이지 넘김 -> Bloc을 통하지 않고서는 다른방법은 완전히 막혀있음
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => BlocProvider.of<AppCubits>(context).goHome()));
+                // 뮤직플레이어 상태 유지 후 페이지 넘김 -> 상위 BuildContext에서 AppCubit을 사용하고 있음 scoped
+                // 값을 넘기더라도 다음에 값을 넘길때 상태 유지는 보장할 수 없음
+                // 싱글톤 기억하기
+                Navigator.pop(context);
+// Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage(context)));
               },
               icon: Icon(
                 Icons.west,
