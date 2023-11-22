@@ -22,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage> {
     'userRePw': '',
     'userNick': '',
     'userAge': '',
-    'userGender': '',
+    'userGender': 'M',
   };
 
   bool hasValidIdLength = false;

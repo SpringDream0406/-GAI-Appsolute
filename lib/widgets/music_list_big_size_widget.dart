@@ -6,52 +6,59 @@ import 'package:flutter_test_project/widgets/app_text.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class MusicListBigSizePlay extends StatefulWidget {
-  const MusicListBigSizePlay({super.key});
+  final String listTitle;
+  final String listContents;
+
+  const MusicListBigSizePlay({
+    super.key,
+    this.listTitle = "리스트 제목",
+    this.listContents = "리스트 소개 내용",
+  });
 
   @override
   State<MusicListBigSizePlay> createState() => _MusicListBigSizePlayState();
 }
 
 class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
-  // 이미지
-  List images = [
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-  ];
-
-// 노래제목
-  List title = [
-    "환상의나라",
-    "전설",
-    "몽키",
-    "소곡집1",
-    "소곡집2",
-    "몽키",
-    "소곡집2",
-    "환상의나라",
-    "전설",
-    "몽키",
-    "소곡집1",
-    "소곡집2",
-    "몽키",
-    "소곡집2"
-  ];
-
   @override
   Widget build(BuildContext context) {
     double screen = MediaQuery.of(context).size.width;
+
+    // 이미지
+    List images = [
+      "jan_hon.jpeg",
+      "jan_le.jpeg",
+      "jan_monkey.jpeg",
+      "jan_so.jpeg",
+      "jan_so2.jpeg",
+      "jan_monkey.jpeg",
+      "jan_so.jpeg",
+      "jan_hon.jpeg",
+      "jan_le.jpeg",
+      "jan_monkey.jpeg",
+      "jan_so.jpeg",
+      "jan_so2.jpeg",
+      "jan_monkey.jpeg",
+      "jan_so.jpeg",
+    ];
+
+// 노래제목
+    List title = [
+      "환상의나라",
+      "전설",
+      "몽키",
+      "소곡집1",
+      "소곡집2",
+      "몽키",
+      "소곡집2",
+      "환상의나라",
+      "전설",
+      "몽키",
+      "소곡집1",
+      "소곡집2",
+      "몽키",
+      "소곡집2"
+    ];
 
     return Container(
       width: screen,
@@ -87,7 +94,7 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AppLargeText(
-                          text: '이런저런 리스트들',
+                          text: widget.listTitle,
                           color: Colors.white.withOpacity(0.9),
                           size: 25,
                         ),
@@ -113,8 +120,9 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
               width: screen * 0.84,
               height: screen * 0.12,
               child: AppText(
-                text: '블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라',
+                text: widget.listContents,
                 color: Colors.white70,
+                size: 17,
               ),
             ),
           ),
@@ -168,7 +176,7 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                                               size: 16,
                                             ),
                                             AppText(
-                                              text: "가수 이름이 들어갑니다.",
+                                              text: "잔나비",
                                               color: Colors.grey,
                                               size: 15,
                                             )

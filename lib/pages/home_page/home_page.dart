@@ -153,7 +153,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           if (selectedMenu == "휴식")
                             Column(
                               children: [
-                                MusicListBigSizePlay(),
+                                MusicListBigSizePlay(
+                                  listTitle: "집에서 쉴 때",
+                                  listContents:
+                                      "오늘은 뭔가 한가한 하루, 집에서 아늑할 때 듣기에 차분한 노래들로 준비해 보았어요.",
+                                ),
                                 SizeBoxH20(),
                                 RankPageTitleText(
                                   text: "맞춤 뮤직 스테이션",

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AnimatedCard extends StatefulWidget {
   final Color? cardColor; // 카드 색
-  final double? zAngle; // 기울기 음수는 좌, 양수는 우
-  final double? yAngle; // 회전 음수는 좌, 양수는 우
+  final double? zAngle; // 카드 기울기 음수는 좌, 양수는 우
+  final double? yAngle; // 카드 회전 음수는 좌, 양수는 우
   final double width; // 카드 넓이
   final double height; // 카드 높이
   final Widget? widget; // 안에 넣고 싶은 것, 그런데 하얀 글씨만 어울림.
