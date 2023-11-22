@@ -1,20 +1,23 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_project/pages/music_play_page/music_play_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 //상태코드 모두 주석처리
 class AudioFile extends StatefulWidget {
-  final AudioPlayer musicPlayer;
-  const AudioFile({super.key, required this.musicPlayer});
+  // final AudioPlayer musicPlayer;
+  const AudioFile({
+    super.key,
+    // required this.musicPlayer
+  });
 
   @override
   State<AudioFile> createState() => _AudioFileState();
 }
 
 class _AudioFileState extends State<AudioFile> {
-  late AudioPlayer musicPlayer;
+  // late AudioPlayer musicPlayer;
 
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
@@ -24,11 +27,10 @@ class _AudioFileState extends State<AudioFile> {
   bool isPaused = false;
   bool isLoop = false;
 
-
   @override
   void initState() {
     super.initState();
-    musicPlayer = AudioPlayer();
+    // musicPlayer = AudioPlayer();
     _initAudioPlayer();
     // musicPlayer.onPlayerStateChanged.listen((state) {
     //   setState(() {
@@ -75,8 +77,7 @@ class _AudioFileState extends State<AudioFile> {
     int minutes = Duration(seconds: seconds).inMinutes;
     int remainingSeconds = seconds - (minutes * 60);
 
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString()
-        .padLeft(2, '0')}';
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
   Future<void> saveState() async {
@@ -110,8 +111,6 @@ class _AudioFileState extends State<AudioFile> {
     }
   }
 
-
-
   @override
   void dispose() {
     // 현재 상태를 저장합니다.
@@ -140,7 +139,7 @@ class _AudioFileState extends State<AudioFile> {
                 isPlaying = true;
               });
             } else if (isPlaying == true) {
-             await musicPlayer.pause();
+              await musicPlayer.pause();
               setState(() {
                 isPlaying = false;
               });
@@ -167,10 +166,8 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {  //shuffle_button
-
-
-
+                  onPressed: () {
+                    //shuffle_button
                   })),
           Container(
               width: 60,
@@ -184,9 +181,8 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {  // skip_to_prevous
-
-
+                  onPressed: () {
+                    // skip_to_prevous
                   })),
           btnStart(),
           Container(
@@ -201,9 +197,8 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {  // skip button
-
-
+                  onPressed: () {
+                    // skip button
                   })),
           Container(
               width: 60,
@@ -217,9 +212,8 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {  //loop button
-
-
+                  onPressed: () {
+                    //loop button
                   })),
         ],
       ),

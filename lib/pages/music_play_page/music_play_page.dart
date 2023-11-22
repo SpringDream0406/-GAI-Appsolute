@@ -16,10 +16,8 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-
 //자동으로 dispose되는 페이지 플레이어를 백그라운드에서 실행하려면 싱글톤으로 상태 해제 없이
 // 가져가야한다.
-
 
 class MusicPlayPage extends StatefulWidget {
   final TestModel? info;
@@ -38,7 +36,6 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
   void initState() {
     super.initState();
     _musicpagecontroller = PageController();
-
   }
 
   @override
@@ -183,7 +180,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                         ),
                       ),
                     ),
-                    AudioFile(musicPlayer: musicPlayer),
+                    AudioFile(),
                   ],
                 )),
             // 앨범자켓 (현재 재생되는 앨범자켓이 출력되는 장소입니다)

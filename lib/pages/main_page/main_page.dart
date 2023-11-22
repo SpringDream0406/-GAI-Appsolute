@@ -90,7 +90,7 @@ import 'package:flutter_test_project/widgets/global_keys.dart';
 // }
 
 class MainPage extends StatefulWidget {
-  const MainPage(BuildContext context, {super.key});
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
