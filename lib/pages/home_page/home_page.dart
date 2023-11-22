@@ -9,6 +9,8 @@ import 'package:flutter_test_project/pages/home_page/widgets/homepage_playback_h
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_emotion_recommended_playlist.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_user_custom_music_list.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_category.dart';
+import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_new_album_list.dart';
+import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_rank_list.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_title_text.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_top_button.dart';
 import 'package:flutter_test_project/widgets/app_our_bar.dart';
@@ -83,6 +85,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "파티",
     "잠잘 때"
   ];
+  final List<String> userimg = [
+    "userlist1.png",
+    "userlist2.png",
+    "userlist3.png",
+    "userlist4.png",
+    "userlist5.png"
+  ];
 
   String? currentImagePath; // 초기 이미지 경로
   String? selectedMenu; // 현재 선택된 메뉴 추적
@@ -141,7 +150,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // 페이지의 내용은 여기 있음
                         children: [
-                          if (selectedMenu == "휴식") MusicListBigSizePlay(),
+                          if (selectedMenu == "휴식")
+                            Column(
+                              children: [
+                                MusicListBigSizePlay(),
+                                SizeBoxH20(),
+                                RankPageTitleText(
+                                  text: "새 앨범 및 싱글",
+                                ),
+                                SizeBoxH30(),
+                                RankPageNewAlbumList(
+                                    userimg: userimg, info: info),
+                              ],
+                            ),
+                          if (selectedMenu == "행복한 기분") MusicListBigSizePlay(),
+                          if (selectedMenu == "에너지 충전") MusicListBigSizePlay(),
+                          if (selectedMenu == "집중") MusicListBigSizePlay(),
+                          if (selectedMenu == "운동") MusicListBigSizePlay(),
+                          if (selectedMenu == "슬픔") MusicListBigSizePlay(),
+                          if (selectedMenu == "출퇴근길") MusicListBigSizePlay(),
+                          if (selectedMenu == "로멘스") MusicListBigSizePlay(),
+                          if (selectedMenu == "파티") MusicListBigSizePlay(),
+                          if (selectedMenu == "잠잘 때") MusicListBigSizePlay(),
+
                           // "타이틀"(widget)
                           const SizeBoxH30(),
                           const HomePageMainTitle(text: "MUSIC 추천 리스트"),
