@@ -1,8 +1,10 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_project/pages/music_play_page/music_play_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+//상태코드 모두 주석처리
 class AudioFile extends StatefulWidget {
   final AudioPlayer musicPlayer;
   const AudioFile({super.key, required this.musicPlayer});
@@ -12,25 +14,75 @@ class AudioFile extends StatefulWidget {
 }
 
 class _AudioFileState extends State<AudioFile> {
+  late AudioPlayer musicPlayer;
+
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
-  String path = "rr.mp3";
+
+  // String path = "rr.mp3";
   bool isPlaying = false;
   bool isPaused = false;
   bool isLoop = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    musicPlayer = AudioPlayer();
+    _initAudioPlayer();
+    // musicPlayer.onPlayerStateChanged.listen((state) {
+    //   setState(() {
+    //     // isPlaying = state == PlayerState.playing;
+    //   });
+    // });
+
+    // musicPlayer.onDurationChanged.listen((nuwDuration) {
+    //   setState(() {
+    //     duration = nuwDuration;
+    //   });
+    // });
+
+    // musicPlayer.onPositionChanged.listen((newPosition) {
+    //   setState(() {
+    //     position = newPosition;
+    //   });
+    // });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadState();
+    });
+  }
+
+  IconData playIcon = Icons.play_arrow;
+  List<IconData> _icons = [
+    Icons.play_arrow,
+    Icons.pause,
+  ];
+
+  Future<void> _initAudioPlayer() async {
+    await musicPlayer.setUrl(
+        'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+  }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // super.didChangeAppLifecycleState(state);
+  //   print('App Lifecycle State: $state');
+  // }
 
   // 재생중인 시간, 남은 재생시간
   String formatTime(int seconds) {
     int minutes = Duration(seconds: seconds).inMinutes;
     int remainingSeconds = seconds - (minutes * 60);
 
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString()
+        .padLeft(2, '0')}';
   }
 
   Future<void> saveState() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('last_position', position.inSeconds);
-    await prefs.setString('last_path', path);
+    // await prefs.setString('last_path', path);
     // 재생 상태도 저장 합니다.
     await prefs.setBool('is_playing', isPlaying);
   }
@@ -44,52 +96,21 @@ class _AudioFileState extends State<AudioFile> {
     // 로드된 정보를 기반으로 오디오 플레이어 설정
     setState(() {
       position = Duration(seconds: savedPosition);
-      path = savedPath;
+      // path = savedPath;
       // 재생 상태를 설정합니다.
       isPlaying = savedIsPlaying;
     });
-    await musicPlayer.setSource(AssetSource(savedPath));
+    // await musicPlayer.setSource(AssetSource(savedPath));
 
     // await musicPlayer.setSource(UrlSource(savedPath)); 웹url
 
     if (isPlaying) {
-      musicPlayer.play(UrlSource(savedPath));
+      // musicPlayer.play(UrlSource(savedPath));
       musicPlayer.seek(Duration(seconds: savedPosition));
     }
   }
 
-  // initState
-  @override
-  void initState() {
-    super.initState();
-    musicPlayer.onPlayerStateChanged.listen((state) {
-      setState(() {
-        isPlaying = state == PlayerState.playing;
-      });
-    });
 
-    musicPlayer.onDurationChanged.listen((nuwDuration) {
-      setState(() {
-        duration = nuwDuration;
-      });
-    });
-
-    musicPlayer.onPositionChanged.listen((newPosition) {
-      setState(() {
-        position = newPosition;
-      });
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadState();
-    });
-  }
-
-  IconData playIcon = Icons.play_arrow;
-  List<IconData> _icons = [
-    Icons.play_arrow,
-    Icons.pause,
-  ];
 
   @override
   void dispose() {
@@ -114,12 +135,12 @@ class _AudioFileState extends State<AudioFile> {
           ),
           onPressed: () async {
             if (isPlaying == false) {
-              musicPlayer.play(AssetSource(path));
+              await musicPlayer.play();
               setState(() {
                 isPlaying = true;
               });
             } else if (isPlaying == true) {
-              musicPlayer.pause();
+             await musicPlayer.pause();
               setState(() {
                 isPlaying = false;
               });
@@ -146,7 +167,11 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {})),
+                  onPressed: () {  //shuffle_button
+
+
+
+                  })),
           Container(
               width: 60,
               height: 60,
@@ -159,7 +184,10 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {})),
+                  onPressed: () {  // skip_to_prevous
+
+
+                  })),
           btnStart(),
           Container(
               width: 60,
@@ -173,7 +201,10 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {})),
+                  onPressed: () {  // skip button
+
+
+                  })),
           Container(
               width: 60,
               height: 60,
@@ -186,7 +217,10 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {})),
+                  onPressed: () {  //loop button
+
+
+                  })),
         ],
       ),
     );
@@ -206,7 +240,7 @@ class _AudioFileState extends State<AudioFile> {
               onChanged: (value) {
                 final position = Duration(seconds: value.toInt());
                 musicPlayer.seek(position);
-                musicPlayer.resume();
+                // musicPlayer.resume();
 
                 final newPosition = Duration(seconds: value.toInt());
                 musicPlayer.seek(newPosition);

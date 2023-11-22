@@ -10,11 +10,16 @@ import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_pa
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_slide_bottom_bar.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_top_menu.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:flutter_test_project/widgets/pastel_color.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+
+//자동으로 dispose되는 페이지 플레이어를 백그라운드에서 실행하려면 싱글톤으로 상태 해제 없이
+// 가져가야한다.
+
 
 class MusicPlayPage extends StatefulWidget {
   final TestModel? info;
@@ -33,6 +38,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
   void initState() {
     super.initState();
     _musicpagecontroller = PageController();
+
   }
 
   @override

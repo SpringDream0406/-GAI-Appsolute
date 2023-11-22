@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
 // import 'package:flutter_test_project/pages/music_play_page/audio_bloc/audio_bloc.dart';
+import 'package:flutter_test_project/pages/main_page/main_page.dart';
 
 class MusicPlayPageTopMenu extends StatelessWidget {
   const MusicPlayPageTopMenu({super.key});
@@ -26,8 +27,9 @@ class MusicPlayPageTopMenu extends StatelessWidget {
                 // if (audioPlayerBloc.state.isPlaying) {
                 //   audioPlayerBloc.add(PauseAudio());
                 // }
+                // 뮤직플레이어 상태 유지 후 페이지 넘김 -> Bloc을 통하지 않고서는 다른방법은 완전히 막혀있음
 
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BlocProvider.of<AppCubits>(context).goHome()));
               },
               icon: Icon(
                 Icons.west,
@@ -37,7 +39,7 @@ class MusicPlayPageTopMenu extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                BlocProvider.of<AppCubits>(context).goHome();
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
               },
               icon: Icon(
                 Icons.more_vert,
