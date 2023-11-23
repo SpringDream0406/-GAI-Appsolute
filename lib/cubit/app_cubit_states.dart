@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 
 abstract class CubitStates extends Equatable {}
@@ -22,12 +23,19 @@ class LoadingState extends CubitStates {
 
 // 로딩완료
 class LoadedState extends CubitStates {
-  LoadedState(this.places);
+  LoadedState(this.places, this.lastResponse);
 
   final List<TestModel> places;
+  final DataModel lastResponse;
+  // final String lastResponse;
 
   @override
-  List<Object> get props => [places];
+  List<Object> get props => [places, lastResponse];
+}
+
+class MainState extends CubitStates {
+  @override
+  List<Object> get props => [];
 }
 
 class RankPageState extends CubitStates {

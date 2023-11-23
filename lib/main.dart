@@ -6,6 +6,7 @@ import 'package:flutter_test_project/pages/music_list_album_page/cubit/music_lis
 import 'package:flutter_test_project/pages/music_list_artist_page/cubit/music_list_artist_page_info_cubits.dart';
 import 'package:flutter_test_project/pages/music_list_page/cubit/music_list_page_info_cubits.dart';
 import 'package:flutter_test_project/services/data_services.dart';
+import 'package:flutter_test_project/services/sign_up_services.dart';
 import 'package:flutter_test_project/widgets/global_keys.dart';
 
 void main() {
@@ -43,9 +44,8 @@ class MyApp extends StatelessWidget {
         home: MultiBlocProvider(
           providers: [
             BlocProvider<AppCubits>(
-              create: (context) => AppCubits(
-                data: DataServices(),
-              ),
+              create: (context) =>
+                  AppCubits(data: DataServices(), userData: UserLoginService()),
             ),
             BlocProvider<MusicListPageInfoCubits>(
               create: (context) => MusicListPageInfoCubits(),

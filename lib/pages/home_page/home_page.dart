@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubit_states.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_place_recommended_play_list.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_title.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_environment_recommended_playlist.dart';
@@ -146,6 +147,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   builder: (context, state) {
                     if (state is LoadedState) {
                       var info = state.places;
+                      var infomation = state.lastResponse;
+
+                      print("  최종적으로 도착해야할 곳1 :   $info");
+                      print("  최종적으로 도착해야할 곳1 :   $infomation");
+                      print(info[1].name);
+                      print(infomation.user.played);
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // 페이지의 내용은 여기 있음

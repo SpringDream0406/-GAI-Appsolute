@@ -7,6 +7,7 @@ import 'package:flutter_test_project/pages/welcome_page/widgets/welcome_page_dot
 import 'package:flutter_test_project/pages/welcome_page/widgets/welcome_page_login_join_input.dart';
 import 'package:flutter_test_project/pages/welcome_page/widgets/welcome_page_sub2_sign_up_page.dart';
 import 'package:flutter_test_project/services/sign_up_services.dart';
+import 'package:flutter_test_project/services/sign_up_services.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/login_button.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
