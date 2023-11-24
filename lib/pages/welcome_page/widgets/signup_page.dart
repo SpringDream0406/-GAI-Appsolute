@@ -269,7 +269,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             Navigator.pop(context);
                             // 이전페이지로 일단 돌아가게 했는데, 경우에 따라 다르게도 가능함.
                           } else {
-                            ShowToast(message);
+                            ShowToast(context, message);
                           }
                         },
                         child: LoginButton(width: 1, text: "확인"),

@@ -83,10 +83,10 @@ class LoginScreen extends StatelessWidget {
               if (result.success) {
                 BlocProvider.of<AppCubits>(context).getData();
               } else {
-                ShowToast(result.message);
+                ShowToast(context, result.message);
               }
             } else {
-              ShowToast("모든 정보를 채워주세요.");
+              ShowToast(context, "모든 정보를 채워주세요.");
             }
           },
           child: LoginButton(text: "Login"),
@@ -130,7 +130,7 @@ class LoginScreen extends StatelessWidget {
           },
           child: Text(
             "- MADE ABSOLUTE",
-            style: TextStyle(color: Colors.white70, fontSize: 18),
+            style: TextStyle(color: Colors.white54, fontSize: 16),
           ),
         )
       ],
