@@ -10,15 +10,14 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 import 'package:flutter_test_project/pages/main_page/main_page.dart';
 
 class PlayBackHistory extends StatelessWidget {
+  final List<Activity> userPlayed;
   final List<TestModel> info;
-  final List<String> titles;
-  final List<String> images;
 
-  const PlayBackHistory(
-      {super.key,
-      required this.info,
-      required this.images,
-      required this.titles});
+  const PlayBackHistory({
+    super.key,
+    required this.userPlayed,
+    required this.info,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class PlayBackHistory extends StatelessWidget {
         children: [
           _buildRankList(context, 0, 4),
           _buildRankList(context, 4, 8),
-          _buildRankList(context, 8, 12)
+          _buildRankList(context, 8, 10)
         ],
       ),
     );
@@ -49,13 +48,6 @@ class PlayBackHistory extends StatelessWidget {
         int rankIndex = start + index;
         return InkWell(
           onTap: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => MusicPlayPage(info: info[index]),
-            //     fullscreenDialog: true,
-            //   ),
-            // );
-            // BlocProvider.of<AppCubits>(context).MusicPlayPage(info[index]);
             mainNavigatorKey.currentState!.push(
               MaterialPageRoute(
                   builder: (context) => MusicPlayPage(info: info[index])),
@@ -72,7 +64,8 @@ class PlayBackHistory extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
                     image: DecorationImage(
-                      image: AssetImage("assets/" + images[rankIndex]),
+                      image: NetworkImage(
+                          "http://192.168.70.65:3300/img/album/${userPlayed[rankIndex].albumIndex}.jpg"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -85,13 +78,16 @@ class PlayBackHistory extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppText(
-                            text: titles[rankIndex],
-                            color: Colors.white,
-                            size: 16,
+                          SizedBox(
+                            width: 200,
+                            child: AppText(
+                              text: userPlayed[rankIndex].song,
+                              color: Colors.white,
+                              size: 16,
+                            ),
                           ),
                           AppText(
-                            text: "잔나비",
+                            text: userPlayed[rankIndex].singer,
                             color: Colors.grey,
                             size: 15,
                           ),

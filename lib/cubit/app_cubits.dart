@@ -28,15 +28,9 @@ class AppCubits extends Cubit<CubitStates> {
 
       print("큐빗의 위치 : $lastResponse");
 
-      // lastResponse = await UserLoginService.lastResponseBody;
-
-      // lastResponse = "hi";
-
-      // lastResponse = UserLoginService.lastResponseBody;
-
-      // infoData = await userData.getData();
-
       emit(LoadedState(places, lastResponse));
-    } catch (e) {}
+    } catch (e) {
+      print("getData 함수에서 에러 발생: $e");
+    }
   }
 }

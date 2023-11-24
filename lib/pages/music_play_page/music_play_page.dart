@@ -1,9 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_test_project/cubit/app_cubit_states.dart';
-// import 'package:flutter_test_project/cubit/app_cubits.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/audio_file.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_background.dart';

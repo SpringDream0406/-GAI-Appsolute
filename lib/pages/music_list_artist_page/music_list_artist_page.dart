@@ -11,9 +11,13 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class MusicListArtistPage extends StatefulWidget {
   final TestModel info;
+  final String title;
   final String imgAsset;
   const MusicListArtistPage(
-      {super.key, required this.info, required this.imgAsset});
+      {super.key,
+      required this.info,
+      required this.imgAsset,
+      required this.title});
 
   @override
   State<MusicListArtistPage> createState() => _MusicListArtistPageState();
@@ -132,30 +136,14 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                       children: [
                         SizeBoxH40(),
                         SizeBoxH40(),
-                        // 가수 이름
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppLargeText(
-                              text: "가수 이름",
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                          ],
-                        ),
                         SizeBoxH10(),
-                        // 데이터 넘어오는거 확인용
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppLargeText(
-                              text: "데확용1 : " + widget.info.name,
-                              color: Colors.white,
-                              size: 20,
-                            )
-                          ],
+                        // 가수 이름
+                        AppLargeText(
+                          text: widget.title,
+                          color: Colors.white,
+                          size: 40,
                         ),
-                        SizeBoxH20(),
+                        SizeBoxH30(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -248,7 +236,7 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                             )
                           ],
                         ),
-                        SizeBoxH20(),
+                        SizeBoxH30(),
                         // 노래 리스트가 담긴 곳
                         Container(
                           height: 240,
@@ -373,124 +361,6 @@ class _MusicListArtistPageState extends State<MusicListArtistPage> {
                       ],
                     ),
                   )),
-
-              // 하단의 메뉴
-              // Positioned(
-              //     bottom: 20,
-              //     left: 20,
-              //     right: 20,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         GestureDetector(
-              //           onTap: () {
-              //             var list =
-              //                 BlocProvider.of<MusicListArtistPageInfoCubits>(
-              //                         context)
-              //                     .state;
-              //
-              //             if (list.isEmpty) {
-              //               setState(() {
-              //                 color = Colors.red;
-              //               });
-              //
-              //               BlocProvider.of<MusicListArtistPageInfoCubits>(
-              //                       context)
-              //                   .updateMusicListArtistPageWish(
-              //                       widget.info.name, selectedIndex, color);
-              //             } else {
-              //               for (int i = 0; i < list.length; i++) {
-              //                 if (list[i].name == widget.info.name) {
-              //                   if (list[i].color == Colors.red) {
-              //                     Future.delayed(Duration.zero, () {
-              //                       BlocProvider.of<
-              //                                   MusicListArtistPageInfoCubits>(
-              //                               context)
-              //                           .updateMusicListArtistPageWish(
-              //                               widget.info.name,
-              //                               selectedIndex,
-              //                               color);
-              //                     });
-              //                     setState(() {
-              //                       color = Colors.white70;
-              //                     });
-              //                     return;
-              //                   } else if (color == Colors.white70) {
-              //                     setState(() {
-              //                       color = Colors.red;
-              //                     });
-              //                     BlocProvider.of<
-              //                                 MusicListArtistPageInfoCubits>(
-              //                             context)
-              //                         .updateMusicListArtistPageWish(
-              //                             widget.info.name,
-              //                             selectedIndex,
-              //                             color);
-              //                     return;
-              //                   }
-              //                 } else {
-              //                   if (color == Colors.white70) {
-              //                     setState(() {
-              //                       color = Colors.red;
-              //                     });
-              //                     BlocProvider.of<
-              //                                 MusicListArtistPageInfoCubits>(
-              //                             context)
-              //                         .updateMusicListArtistPageWish(
-              //                             widget.info.name,
-              //                             selectedIndex,
-              //                             color);
-              //                   } else {
-              //                     setState(() {
-              //                       color = Colors.white70;
-              //                     });
-              //                     BlocProvider.of<
-              //                                 MusicListArtistPageInfoCubits>(
-              //                             context)
-              //                         .updateMusicListArtistPageWish(
-              //                             widget.info.name,
-              //                             selectedIndex,
-              //                             color);
-              //                   }
-              //                 }
-              //               }
-              //             }
-              //           },
-              //           child: MusicListArtistPageAddButtons(
-              //               isIcon: true,
-              //               icon: Icons.star_rounded,
-              //               size: 60,
-              //               color: color!,
-              //               backgraundColor: Colors.transparent,
-              //               borderColor: color!),
-              //         ),
-              //         SizeBoxW05(),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.skip_previous,
-              //           iconColor: Colors.white,
-              //           iconSize: 35,
-              //           backColor: Colors.transparent,
-              //         ),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.play_arrow,
-              //           iconColor: Colors.white,
-              //           iconSize: 40,
-              //           backColor: Colors.white12,
-              //         ),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.skip_next,
-              //           iconColor: Colors.white,
-              //           iconSize: 35,
-              //           backColor: Colors.transparent,
-              //         ),
-              //         MusicListArtistPagePlayButton(
-              //           icon: Icons.replay,
-              //           iconColor: Colors.white,
-              //           iconSize: 30,
-              //           backColor: Colors.transparent,
-              //         )
-              //       ],
-              //     )),
             ],
           )),
     );

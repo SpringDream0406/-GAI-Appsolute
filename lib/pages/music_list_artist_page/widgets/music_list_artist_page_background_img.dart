@@ -17,7 +17,7 @@ class MusicListArtistBackground extends StatelessWidget {
           height: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(imgAsset),
+              image: NetworkImage(imgAsset),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.1), // 반투명한 검은색

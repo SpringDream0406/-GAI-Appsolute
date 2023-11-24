@@ -72,6 +72,7 @@ class _MyPageState extends State<MyPage> {
                 builder: (context, state) {
                   if (state is LoadedState) {
                     var info = state.places;
+                    var infomation = state.lastResponse;
 
                     return Column(
                       children: [
@@ -116,12 +117,14 @@ class _MyPageState extends State<MyPage> {
 
                         listStayle == false
                             ? myInfoListTextStyle(
+                                userLikeSong: infomation.user.singer,
                                 song: song,
                                 sing: sing,
                                 randomNumberlist: randomNumberlist,
                                 info: info,
                               )
                             : MyInfoListIconStyle(
+                                userLikeSong: infomation.user.singer,
                                 sing: sing,
                                 song: song,
                                 randomNumberlist: randomNumberlist,

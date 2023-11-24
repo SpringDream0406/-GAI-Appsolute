@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_album_page/music_list_album_page.dart';
 import 'package:flutter_test_project/pages/music_list_artist_page/music_list_artist_page.dart';
@@ -8,12 +9,14 @@ class myInfoListTextStyle extends StatelessWidget {
   final List<String> sing;
   final List<String> song;
   final List<int> randomNumberlist;
+  final List<Activity> userLikeSong;
   final List<TestModel> info;
 
   const myInfoListTextStyle(
       {super.key,
       required this.song,
       required this.sing,
+      required this.userLikeSong,
       required this.randomNumberlist,
       required this.info});
 
@@ -26,7 +29,7 @@ class myInfoListTextStyle extends StatelessWidget {
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
-        itemCount: 8,
+        itemCount: 10,
         itemBuilder: (_, index) {
           return InkWell(
             onTap: () {
@@ -34,15 +37,21 @@ class myInfoListTextStyle extends StatelessWidget {
                   ? Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => MusicListArtistPage(
+                            title: userLikeSong[index].singer,
                             info: info[index],
-                            imgAsset: "assets/all/" + song[index]),
+                            imgAsset: "http://192.168.70.65:3300/img/singer/" +
+                                userLikeSong[index].singerIndex.toString() +
+                                ".jpg"),
                       ),
                     )
                   : Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => MusicListAlbumPage(
+                            title: userLikeSong[index].album,
                             info: info[index],
-                            imgAsset: "assets/sing/" + sing[index]),
+                            imgAsset: "http://192.168.70.65:3300/img/album/" +
+                                userLikeSong[index].albumIndex.toString() +
+                                ".jpg"),
                       ),
                     );
             },
@@ -59,9 +68,13 @@ class myInfoListTextStyle extends StatelessWidget {
                             randomNumberlist[index] == 1 ? 100 : 10),
                         color: Colors.white,
                         image: DecorationImage(
-                          image: AssetImage(randomNumberlist[index] == 1
-                              ? "assets/all/" + song[index]
-                              : "assets/sing/" + sing[index]),
+                          image: NetworkImage(randomNumberlist[index] == 1
+                              ? "http://192.168.70.65:3300/img/singer/" +
+                                  userLikeSong[index].singerIndex.toString() +
+                                  ".jpg"
+                              : "http://192.168.70.65:3300/img/album/" +
+                                  userLikeSong[index].albumIndex.toString() +
+                                  ".jpg"),
                           fit: BoxFit.cover,
                         )),
                   ),
@@ -79,12 +92,16 @@ class myInfoListTextStyle extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 AppText(
-                                  text: "타이틀이 들어감".toString(),
+                                  text: randomNumberlist[index] == 1
+                                      ? userLikeSong[index].singer
+                                      : userLikeSong[index].album,
                                   color: Colors.white,
                                   size: 16,
                                 ),
                                 AppText(
-                                  text: "리스트 또는 가수이름",
+                                  text: randomNumberlist[index] == 1
+                                      ? userLikeSong[index].album
+                                      : userLikeSong[index].singer,
                                   color: Colors.grey,
                                   size: 15,
                                 )

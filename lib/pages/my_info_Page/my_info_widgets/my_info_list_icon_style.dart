@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_album_page/music_list_album_page.dart';
 import 'package:flutter_test_project/pages/music_list_artist_page/music_list_artist_page.dart';
@@ -11,9 +12,11 @@ class MyInfoListIconStyle extends StatelessWidget {
   final List<String> song;
   final List<int> randomNumberlist;
   final List<TestModel> info;
+  final List<Activity> userLikeSong;
 
   const MyInfoListIconStyle(
       {super.key,
+      required this.userLikeSong,
       required this.song,
       required this.sing,
       required this.randomNumberlist,
@@ -26,13 +29,13 @@ class MyInfoListIconStyle extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(15),
         width: MediaQuery.of(context).size.width,
-        height: 1000,
+        height: 1200,
         child: GridView.builder(
           // shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
           padding: EdgeInsets.all(0),
-          itemCount: 8,
+          itemCount: 10,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 2 / 2.5,
@@ -45,15 +48,24 @@ class MyInfoListIconStyle extends StatelessWidget {
                     ? Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => MusicListArtistPage(
+                              title: userLikeSong[index].singer,
                               info: info[index],
-                              imgAsset: "assets/all/" + song[index]),
+                              imgAsset:
+                                  "http://192.168.70.65:3300/img/singer/" +
+                                      userLikeSong[index]
+                                          .singerIndex
+                                          .toString() +
+                                      ".jpg"),
                         ),
                       )
                     : Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => MusicListAlbumPage(
+                              title: userLikeSong[index].album,
                               info: info[index],
-                              imgAsset: "assets/sing/" + sing[index]),
+                              imgAsset: "http://192.168.70.65:3300/img/album/" +
+                                  userLikeSong[index].albumIndex.toString() +
+                                  ".jpg"),
                         ),
                       );
               },
@@ -70,17 +82,27 @@ class MyInfoListIconStyle extends StatelessWidget {
                         ),
                         color: Colors.grey[800],
                         image: DecorationImage(
-                          image: AssetImage(randomNumberlist[index] == 1
-                              ? "assets/all/" + song[index]
-                              : "assets/sing/" + sing[index]),
+                          image: NetworkImage(randomNumberlist[index] == 1
+                              ? "http://192.168.70.65:3300/img/singer/" +
+                                  userLikeSong[index].singerIndex.toString() +
+                                  ".jpg"
+                              : "http://192.168.70.65:3300/img/album/" +
+                                  userLikeSong[index].albumIndex.toString() +
+                                  ".jpg"),
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     AppLargeText(
-                        text: "타이틀이 들어감", color: Colors.white70, size: 18),
+                        text: randomNumberlist[index] == 1
+                            ? userLikeSong[index].singer
+                            : userLikeSong[index].album,
+                        color: Colors.white70,
+                        size: 18),
                     AppText(
-                      text: "리스트 또는 작가이름",
+                      text: randomNumberlist[index] == 1
+                          ? userLikeSong[index].album
+                          : userLikeSong[index].singer,
                       color: Colors.white70,
                       size: 16,
                     ),

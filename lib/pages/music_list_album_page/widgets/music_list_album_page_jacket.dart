@@ -24,7 +24,7 @@ class MusicListPageAlbumJacketImg extends StatelessWidget {
               ],
               color: Colors.black54,
               image: DecorationImage(
-                  image: AssetImage(imgAsset), fit: BoxFit.cover))),
+                  image: NetworkImage(imgAsset), fit: BoxFit.cover))),
     );
   }
 }

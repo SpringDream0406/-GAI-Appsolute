@@ -23,7 +23,7 @@ class MusicListAlbumBackground extends StatelessWidget {
                       Colors.black.withOpacity(0.7), // 반투명한 검은색
                       BlendMode.overlay, // 오버레이 모드
                     ),
-                    image: AssetImage(imgAsset),
+                    image: NetworkImage(imgAsset),
                     fit: BoxFit.cover)),
           ),
         ),

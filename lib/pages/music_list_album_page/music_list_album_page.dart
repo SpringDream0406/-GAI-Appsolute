@@ -14,8 +14,12 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 class MusicListAlbumPage extends StatefulWidget {
   final String imgAsset;
   final TestModel info;
+  final String title;
   const MusicListAlbumPage(
-      {super.key, required this.info, required this.imgAsset});
+      {super.key,
+      required this.info,
+      required this.imgAsset,
+      required this.title});
 
   @override
   State<MusicListAlbumPage> createState() => _MusicListAlbumPageState();
@@ -135,29 +139,13 @@ class _MusicListAlbumPageState extends State<MusicListAlbumPage> {
                         SizeBoxH40(),
                         SizeBoxH40(),
                         // 가수 이름
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppLargeText(
-                              text: "앨범 제목",
-                              color: Colors.white,
-                              size: 38,
-                            ),
-                          ],
-                        ),
                         SizeBoxH10(),
-                        // 데이터 넘어오는거 확인용
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppLargeText(
-                              text: "데확용1 : " + widget.info.name,
-                              color: Colors.white,
-                              size: 20,
-                            )
-                          ],
+                        AppLargeText(
+                          text: widget.title,
+                          color: Colors.white,
+                          size: 38,
                         ),
-                        SizeBoxH20(),
+                        SizeBoxH30(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -249,7 +237,7 @@ class _MusicListAlbumPageState extends State<MusicListAlbumPage> {
                             )
                           ],
                         ),
-                        SizeBoxH20(),
+                        SizeBoxH30(),
                         // 노래 리스트가 담긴 곳
                         Container(
                           height: 240,

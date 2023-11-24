@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       print("  최종적으로 도착해야할 곳1 :   $info");
                       print("  최종적으로 도착해야할 곳1 :   $infomation");
                       print(info[1].name);
-                      print(infomation.user.played[0].song);
+                      print(infomation.user);
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,9 +352,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                           // 재생되었던 목록을 만들었습니다.
                           PlayBackHistory(
+                            userPlayed: infomation.user.played,
                             info: info,
-                            images: images,
-                            titles: titles,
                           ),
                           const SizeBoxH40(),
 

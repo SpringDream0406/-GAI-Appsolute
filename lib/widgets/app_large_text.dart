@@ -15,6 +15,7 @@ class AppLargeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style:
           TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold),
     );
