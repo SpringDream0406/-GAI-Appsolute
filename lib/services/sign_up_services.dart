@@ -37,21 +37,55 @@ class UserSignUpService {
   }
 }
 
+class LoginResult {
+  final bool success;
+  final String message;
+
+  LoginResult({required this.success, this.message = ''});
+}
+
 class UserLoginService {
   static var lastResponseBody;
 
-  static Future<void> login({
+  // static Future<void> login({
+  //   required String userId,
+  //   required String userPw,
+  // }) async {
+  //   var url = Uri.parse(
+  //       // 'http://192.168.70.65:3300/user/Login'); // HTTPS URL로 변경해야 함~~
+  //       'http://192.168.219.106:3300/user/Login');
+  //
+  //   try {
+  //     var response = await http.post(
+  //       url,
+  //       headers: {'Content-Type': 'application/json'},
+  //       // headers: {'Accept': 'application/json'},
+  //       body: jsonEncode({
+  //         'user_id': userId,
+  //         'user_pw': userPw,
+  //       }),
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       lastResponseBody = response.body;
+  //     } else {
+  //       print('로그인 실패.,');
+  //     }
+  //   } catch (e) {
+  //     print("에러 원인 :  " + e.toString());
+  //   }
+  // }
+
+  static Future<LoginResult> login({
     required String userId,
     required String userPw,
   }) async {
-    var url = Uri.parse(
-        'http://192.168.70.65:3300/user/Login'); // HTTPS URL로 변경해야 함~~
+    var url = Uri.parse('http://192.168.219.106:3300/user/Login');
 
     try {
       var response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        // headers: {'Accept': 'application/json'},
         body: jsonEncode({
           'user_id': userId,
           'user_pw': userPw,
@@ -60,12 +94,15 @@ class UserLoginService {
 
       if (response.statusCode == 200) {
         lastResponseBody = response.body;
+        return LoginResult(success: true);
       } else {
-        print('로그인 실패.,');
+        return LoginResult(success: false, message: response.body);
       }
     } catch (e) {
-      print("에러 원인 :  " + e.toString());
+      return LoginResult(success: false, message: '에러 원인: ${e.toString()}');
     }
+
+    return LoginResult(success: false, message: '알 수 없는 오류 발생');
   }
 
   Future<DataModel> getDataModel() async {

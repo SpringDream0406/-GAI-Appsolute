@@ -39,9 +39,10 @@ class myInfoListTextStyle extends StatelessWidget {
                         builder: (context) => MusicListArtistPage(
                             title: userLikeSong[index].singer,
                             info: info[index],
-                            imgAsset: "http://192.168.70.65:3300/img/singer/" +
-                                userLikeSong[index].singerIndex.toString() +
-                                ".jpg"),
+                            imgAsset:
+                                "http://192.168.219.106:3300/img/singer/" +
+                                    userLikeSong[index].singerIndex.toString() +
+                                    ".jpg"),
                       ),
                     )
                   : Navigator.of(context).push(
@@ -49,7 +50,7 @@ class myInfoListTextStyle extends StatelessWidget {
                         builder: (context) => MusicListAlbumPage(
                             title: userLikeSong[index].album,
                             info: info[index],
-                            imgAsset: "http://192.168.70.65:3300/img/album/" +
+                            imgAsset: "http://192.168.219.106:3300/img/album/" +
                                 userLikeSong[index].albumIndex.toString() +
                                 ".jpg"),
                       ),
@@ -69,10 +70,10 @@ class myInfoListTextStyle extends StatelessWidget {
                         color: Colors.white,
                         image: DecorationImage(
                           image: NetworkImage(randomNumberlist[index] == 1
-                              ? "http://192.168.70.65:3300/img/singer/" +
+                              ? "http://192.168.219.106:3300/img/singer/" +
                                   userLikeSong[index].singerIndex.toString() +
                                   ".jpg"
-                              : "http://192.168.70.65:3300/img/album/" +
+                              : "http://192.168.219.106:3300/img/album/" +
                                   userLikeSong[index].albumIndex.toString() +
                                   ".jpg"),
                           fit: BoxFit.cover,

@@ -25,6 +25,7 @@ class LoadingState extends CubitStates {
 class LoadedState extends CubitStates {
   LoadedState(this.places, this.lastResponse);
 
+  final String ipHttp = "http://192.168.219.106:3300";
   final List<TestModel> places;
   final DataModel lastResponse;
   // final String lastResponse;

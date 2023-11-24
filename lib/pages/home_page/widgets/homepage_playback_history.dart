@@ -65,7 +65,7 @@ class PlayBackHistory extends StatelessWidget {
                     color: Colors.white,
                     image: DecorationImage(
                       image: NetworkImage(
-                          "http://192.168.70.65:3300/img/album/${userPlayed[rankIndex].albumIndex}.jpg"),
+                          "http://192.168.219.106:3300/img/album/${userPlayed[rankIndex].albumIndex}.jpg"),
                       fit: BoxFit.cover,
                     ),
                   ),
