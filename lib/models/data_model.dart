@@ -6,52 +6,52 @@ String dataModelToJson(DataModel data) => json.encode(data.toJson());
 
 class DataModel {
   User user;
-  Recommen recommen;
+  Recommend recommend;
 
   DataModel({
     required this.user,
-    required this.recommen,
+    required this.recommend,
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) => DataModel(
         user: User.fromJson(json["user"]),
-        recommen: Recommen.fromJson(json["recommen"]),
+        recommend: Recommend.fromJson(json["recommend"]),
       );
 
   Map<String, dynamic> toJson() => {
         "user": user.toJson(),
-        "recommen": recommen.toJson(),
+        "recommend": recommend.toJson(),
       };
 }
 
-class Recommen {
-  List<Condition> condition;
-  List<Condition> emotion;
-  List<Condition> time;
+class Recommend {
+  List<Activity> activity;
+  List<Activity> emotion;
+  List<Activity> time;
 
-  Recommen({
-    required this.condition,
+  Recommend({
+    required this.activity,
     required this.emotion,
     required this.time,
   });
 
-  factory Recommen.fromJson(Map<String, dynamic> json) => Recommen(
-        condition: List<Condition>.from(
-            json["condition"].map((x) => Condition.fromJson(x))),
-        emotion: List<Condition>.from(
-            json["emotion"].map((x) => Condition.fromJson(x))),
-        time: List<Condition>.from(
-            json["time"].map((x) => Condition.fromJson(x))),
+  factory Recommend.fromJson(Map<String, dynamic> json) => Recommend(
+        activity: List<Activity>.from(
+            json["activity"].map((x) => Activity.fromJson(x))),
+        emotion: List<Activity>.from(
+            json["emotion"].map((x) => Activity.fromJson(x))),
+        time:
+            List<Activity>.from(json["time"].map((x) => Activity.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "condition": List<dynamic>.from(condition.map((x) => x.toJson())),
+        "activity": List<dynamic>.from(activity.map((x) => x.toJson())),
         "emotion": List<dynamic>.from(emotion.map((x) => x.toJson())),
         "time": List<dynamic>.from(time.map((x) => x.toJson())),
       };
 }
 
-class Condition {
+class Activity {
   int musicIndex;
   int albumIndex;
   int singerIndex;
@@ -62,13 +62,8 @@ class Condition {
   String genre;
   int musicTitme;
   DateTime albumReleased;
-  Type1 type1;
-  Type2 type2;
-  String type3;
-  UserId? userId;
-  DateTime? addedAt;
 
-  Condition({
+  Activity({
     required this.musicIndex,
     required this.albumIndex,
     required this.singerIndex,
@@ -79,14 +74,9 @@ class Condition {
     required this.genre,
     required this.musicTitme,
     required this.albumReleased,
-    required this.type1,
-    required this.type2,
-    required this.type3,
-    this.userId,
-    this.addedAt,
   });
 
-  factory Condition.fromJson(Map<String, dynamic> json) => Condition(
+  factory Activity.fromJson(Map<String, dynamic> json) => Activity(
         musicIndex: json["music_index"],
         albumIndex: json["album_index"],
         singerIndex: json["singer_index"],
@@ -97,12 +87,6 @@ class Condition {
         genre: json["genre"],
         musicTitme: json["music_titme"],
         albumReleased: DateTime.parse(json["album_released"]),
-        type1: type1Values.map[json["type1"]]!,
-        type2: type2Values.map[json["type2"]]!,
-        type3: json["type3"],
-        userId: userIdValues.map[json["user_id"]],
-        addedAt:
-            json["added_at"] == null ? null : DateTime.parse(json["added_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -117,42 +101,13 @@ class Condition {
         "music_titme": musicTitme,
         "album_released":
             "${albumReleased.year.toString().padLeft(4, '0')}-${albumReleased.month.toString().padLeft(2, '0')}-${albumReleased.day.toString().padLeft(2, '0')}",
-        "type1": type1Values.reverse[type1],
-        "type2": type2Values.reverse[type2],
-        "type3": type3,
-        "user_id": userIdValues.reverse[userId],
-        "added_at": addedAt?.toIso8601String(),
       };
 }
 
-enum Type1 { EMPTY, FLUFFY, PURPLE, STICKY, TENTACLED, TYPE1 }
-
-final type1Values = EnumValues({
-  "분노": Type1.EMPTY,
-  "열정적": Type1.FLUFFY,
-  "기쁨": Type1.PURPLE,
-  "안정": Type1.STICKY,
-  "사랑": Type1.TENTACLED,
-  "슬픔": Type1.TYPE1
-});
-
-enum Type2 { EMPTY, FLUFFY, PURPLE, TYPE2 }
-
-final type2Values = EnumValues({
-  "운동/훈련중": Type2.EMPTY,
-  "차량/운전중": Type2.FLUFFY,
-  "산책/걷는중": Type2.PURPLE,
-  "휴식/수면": Type2.TYPE2
-});
-
-enum UserId { LEE89 }
-
-final userIdValues = EnumValues({"lee89": UserId.LEE89});
-
 class User {
-  List<Condition> played;
-  List<Condition> liked;
-  List<Condition> singer;
+  List<Activity> played;
+  List<Activity> liked;
+  List<Activity> singer;
 
   User({
     required this.played,
@@ -161,12 +116,12 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        played: List<Condition>.from(
-            json["played"].map((x) => Condition.fromJson(x))),
-        liked: List<Condition>.from(
-            json["liked"].map((x) => Condition.fromJson(x))),
-        singer: List<Condition>.from(
-            json["singer"].map((x) => Condition.fromJson(x))),
+        played: List<Activity>.from(
+            json["played"].map((x) => Activity.fromJson(x))),
+        liked:
+            List<Activity>.from(json["liked"].map((x) => Activity.fromJson(x))),
+        singer: List<Activity>.from(
+            json["singer"].map((x) => Activity.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -174,16 +129,4 @@ class User {
         "liked": List<dynamic>.from(liked.map((x) => x.toJson())),
         "singer": List<dynamic>.from(singer.map((x) => x.toJson())),
       };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

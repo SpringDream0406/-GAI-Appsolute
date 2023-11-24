@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       print("  최종적으로 도착해야할 곳1 :   $info");
                       print("  최종적으로 도착해야할 곳1 :   $infomation");
                       print(info[1].name);
-                      print(infomation.user.played);
+                      print(infomation.user.played[0].song);
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

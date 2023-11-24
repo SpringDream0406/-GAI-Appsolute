@@ -60,6 +60,7 @@ class UserLoginService {
 
       if (response.statusCode == 200) {
         lastResponseBody = response.body;
+        // DataModel dataModel = dataModelFromJson(response.body);
       } else {
         print('로그인 실패.,');
       }
@@ -71,20 +72,20 @@ class UserLoginService {
   Future<DataModel> getDataModel() async {
     try {
       if (lastResponseBody != null) {
-        Map<String, dynamic> jsonData = jsonDecode(lastResponseBody);
+        Map<String, dynamic>? jsonData = jsonDecode(lastResponseBody);
 
-        return DataModel.fromJson(jsonData);
+        return DataModel.fromJson(jsonData!);
       } else {
         print("아무거나222");
         return DataModel(
             user: User(played: [], liked: [], singer: []),
-            recommen: Recommen(condition: [], emotion: [], time: []));
+            recommend: Recommend(activity: [], emotion: [], time: []));
       }
     } catch (e) {
       print(e);
       return DataModel(
           user: User(played: [], liked: [], singer: []),
-          recommen: Recommen(condition: [], emotion: [], time: []));
+          recommend: Recommend(activity: [], emotion: [], time: []));
     }
   }
 }
