@@ -8,87 +8,6 @@ import 'package:flutter_test_project/pages/my_info_Page/my_info_page.dart';
 import 'package:flutter_test_project/pages/video_page/video_page.dart';
 import 'package:flutter_test_project/widgets/global_keys.dart';
 
-// class MainPage extends StatefulWidget {
-//   const MainPage({super.key});
-//
-//   @override
-//   State<MainPage> createState() => _MainPageState();
-// }
-//
-// class _MainPageState extends State<MainPage> {
-//   int currentIndex = 0;
-//
-//   final List<Widget> pages = [
-//     HomePage(),
-//     RankPage(),
-//     VideoPage(),
-//     MyPage(),
-//   ];
-//
-//   void onTap(int index) {
-//     if (index == currentIndex) {
-//       navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
-//     } else {
-//       setState(() {
-//         currentIndex = index;
-//       });
-//     }
-//   }
-//
-//   BottomNavigationBarItem _buildNavItem(IconData icon, String label) {
-//     return BottomNavigationBarItem(
-//       icon: Icon(icon, size: 35),
-//       label: label,
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return WillPopScope(
-//       onWillPop: () async {
-//         final currentNavigator = navigatorKeys[currentIndex].currentState;
-//         if (currentNavigator!.canPop()) {
-//           currentNavigator.pop();
-//           return false;
-//         }
-//         return true;
-//       },
-//       child: Scaffold(
-//         backgroundColor: Colors.black87,
-//         body: IndexedStack(
-//           index: currentIndex,
-//           children: pages
-//               .map((page) => Navigator(
-//                     key: navigatorKeys[pages.indexOf(page)],
-//                     onGenerateRoute: (settings) =>
-//                         MaterialPageRoute(builder: (_) => page),
-//                   ))
-//               .toList(),
-//         ),
-//         bottomNavigationBar: BottomNavigationBar(
-//           unselectedFontSize: 0,
-//           selectedFontSize: 0,
-//           type: BottomNavigationBarType.fixed,
-//           backgroundColor: Colors.black.withOpacity(0.9),
-//           onTap: onTap,
-//           currentIndex: currentIndex,
-//           selectedItemColor: Colors.white,
-//           unselectedItemColor: Colors.grey.withOpacity(0.5),
-//           showUnselectedLabels: false,
-//           showSelectedLabels: false,
-//           elevation: 0,
-//           items: [
-//             _buildNavItem(Icons.home_filled, "Home"),
-//             _buildNavItem(Icons.bar_chart_sharp, "Rank"),
-//             _buildNavItem(Icons.subscriptions, "Search"),
-//             _buildNavItem(Icons.library_music, "My"),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -108,6 +27,7 @@ class _MainPageState extends State<MainPage> {
     MyPage(),
   ];
 
+  // 바텀 네비게이션을 유지하고 브록 위에 네비게이터를 스탯쌓기 위한 글로벌 키
   final List<GlobalKey<NavigatorState>> navigatorKeys = [
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
@@ -125,6 +45,7 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+  // 바텀 네비게이션의 커스텀
   BottomNavigationBarItem _buildNavItem(IconData icon, String label) {
     return BottomNavigationBarItem(
       icon: Icon(icon, size: 35),

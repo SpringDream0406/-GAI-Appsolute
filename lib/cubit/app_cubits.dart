@@ -26,8 +26,6 @@ class AppCubits extends Cubit<CubitStates> {
 
       lastResponse = await userData.getDataModel();
 
-      print("큐빗의 위치 : $lastResponse");
-
       emit(LoadedState(places, lastResponse));
     } catch (e) {
       print("getData 함수에서 에러 발생: $e");

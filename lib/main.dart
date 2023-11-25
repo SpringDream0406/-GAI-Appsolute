@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: false,
           primarySwatch: Colors.blue,
         ),
-        scrollBehavior: MyCustomScrollBehavior(), // 여기에 커스텀 ScrollBehavior 적용
+        scrollBehavior: MyCustomScrollBehavior(),
         home: MultiBlocProvider(
           providers: [
             BlocProvider<AppCubits>(

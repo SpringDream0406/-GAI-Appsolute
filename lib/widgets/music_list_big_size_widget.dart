@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
@@ -8,12 +9,13 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 class MusicListBigSizePlay extends StatefulWidget {
   final String listTitle;
   final String listContents;
+  final List<Activity> playList;
 
-  const MusicListBigSizePlay({
-    super.key,
-    this.listTitle = "리스트 제목",
-    this.listContents = "리스트 소개 내용",
-  });
+  const MusicListBigSizePlay(
+      {super.key,
+      this.listTitle = "리스트 제목",
+      this.listContents = "리스트 소개 내용",
+      required this.playList});
 
   @override
   State<MusicListBigSizePlay> createState() => _MusicListBigSizePlayState();
@@ -82,7 +84,10 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                         color: Colors.black54,
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
-                            image: AssetImage("assets/" + images[1]),
+                            image: NetworkImage(
+                                "http://192.168.219.106:3300/img/album/" +
+                                    widget.playList[0].albumIndex.toString() +
+                                    ".jpg"),
                             fit: BoxFit.cover)),
                   ),
                   SizeBoxW10(),
@@ -93,10 +98,12 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AppLargeText(
-                          text: widget.listTitle,
-                          color: Colors.white.withOpacity(0.9),
-                          size: 25,
+                        Text(
+                          widget.listTitle,
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold),
                         ),
                         AppText(
                           text: "SEB'S MUSIC",
@@ -104,7 +111,7 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                           size: 14,
                         ),
                         AppText(
-                          text: "12곡",
+                          text: widget.playList.length.toString(),
                           color: Colors.white54,
                           size: 14,
                         )
@@ -119,10 +126,9 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
             child: Container(
               width: screen * 0.84,
               height: screen * 0.12,
-              child: AppText(
-                text: widget.listContents,
-                color: Colors.white70,
-                size: 17,
+              child: Text(
+                widget.listContents,
+                style: TextStyle(color: Colors.white70, fontSize: 17),
               ),
             ),
           ),
@@ -150,8 +156,12 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                                     borderRadius: BorderRadius.circular(5),
                                     color: Colors.white,
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/" + images[index]),
+                                        image: NetworkImage(
+                                            "http://192.168.219.106:3300/img/album/" +
+                                                widget
+                                                    .playList[index].albumIndex
+                                                    .toString() +
+                                                ".jpg"),
                                         fit: BoxFit.cover)),
                               ),
                               SizedBox(
@@ -165,18 +175,20 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
+                                      SizedBox(
+                                        width: 240,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             AppText(
-                                              text: title[index].toString(),
+                                              text: widget.playList[index].song,
                                               color: Colors.white,
                                               size: 16,
                                             ),
                                             AppText(
-                                              text: "잔나비",
+                                              text:
+                                                  widget.playList[index].singer,
                                               color: Colors.grey,
                                               size: 15,
                                             )

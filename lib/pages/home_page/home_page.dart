@@ -9,9 +9,9 @@ import 'package:flutter_test_project/pages/home_page/widgets/homepage_environmen
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_playback_history.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_emotion_recommended_playlist.dart';
 import 'package:flutter_test_project/pages/home_page/widgets/homepage_user_custom_music_list.dart';
+import 'package:flutter_test_project/pages/home_page/widgets/top_menus_widgets.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_category.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_new_album_list.dart';
-import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_rank_list.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_title_text.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page_widgets/rank_page_top_button.dart';
 import 'package:flutter_test_project/widgets/app_our_bar.dart';
@@ -42,38 +42,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  final List<String> images = [
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-  ];
-  final List<String> titles = [
-    "환상의나라",
-    "전설",
-    "몽키",
-    "소곡집1",
-    "소곡집2",
-    "몽키",
-    "소곡집2",
-    "환상의나라",
-    "전설",
-    "몽키",
-    "소곡집1",
-    "소곡집2",
-    "몽키",
-    "소곡집2"
-  ];
   final List<String> menu = [
     "휴식",
     "행복한 기분",
@@ -86,6 +54,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "파티",
     "잠잘 때"
   ];
+
   final List<String> userimg = [
     "userlist1.png",
     "userlist2.png",
@@ -149,149 +118,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       var info = state.places;
                       var infomation = state.lastResponse;
 
-                      print("  최종적으로 도착해야할 곳1 :   $info");
-                      print("  최종적으로 도착해야할 곳1 :   $infomation");
-                      print(info[1].name);
-                      print(infomation.user);
-
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // 페이지의 내용은 여기 있음
                         children: [
-                          if (selectedMenu == "휴식")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(
-                                  listTitle: "집에서 쉴 때",
-                                  listContents:
-                                      "오늘은 뭔가 한가한 하루, 집에서 아늑할 때 듣기에 차분한 노래들로 준비해 보았어요.",
-                                ),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "행복한 기분")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "에너지 충전")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "집중")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "운동")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "슬픔")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "출퇴근길")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "로멘스")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "파티")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
-                          if (selectedMenu == "잠잘 때")
-                            Column(
-                              children: [
-                                MusicListBigSizePlay(),
-                                SizeBoxH20(),
-                                RankPageTitleText(
-                                  text: "맞춤 뮤직 스테이션",
-                                ),
-                                SizeBoxH30(),
-                                RankPageNewAlbumList(
-                                    userimg: userimg, info: info),
-                              ],
-                            ),
+                          // 상단의 메뉴 로직 - 키워드를 클릭시 화면이 반환되는 위치
+                          MenuContentBuilder.buildMenuContent(selectedMenu,
+                              info, infomation.recommend, userimg),
 
                           // "타이틀"(widget)
                           const SizeBoxH30(),
