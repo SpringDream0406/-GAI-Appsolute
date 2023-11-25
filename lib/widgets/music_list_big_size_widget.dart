@@ -108,12 +108,12 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                         AppText(
                           text: "SEB'S MUSIC",
                           color: Colors.white54,
-                          size: 14,
+                          size: 15,
                         ),
                         AppText(
-                          text: widget.playList.length.toString(),
+                          text: widget.playList.length.toString() + "곡",
                           color: Colors.white54,
-                          size: 14,
+                          size: 15,
                         )
                       ],
                     ),
