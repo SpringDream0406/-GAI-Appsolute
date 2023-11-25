@@ -186,7 +186,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           // 재생되었던 목록을 만들었습니다.
                           PlayBackHistory(
                             userPlayed: infomation.user.played,
-                            info: info,
                           ),
                           const SizeBoxH40(),
 

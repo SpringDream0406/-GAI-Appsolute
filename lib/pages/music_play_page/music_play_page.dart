@@ -16,10 +16,10 @@ import 'package:palette_generator/palette_generator.dart';
 // 가져가야한다.
 
 class MusicPlayPage extends StatefulWidget {
-  final TestModel? info;
   final List<Activity> userPlayed;
+  final Activity selectedActivity;
   const MusicPlayPage(
-      {super.key, required this.info, required this.userPlayed});
+      {super.key, required this.userPlayed, required this.selectedActivity});
 
   @override
   State<MusicPlayPage> createState() => _MusicPlayPageState();
@@ -50,7 +50,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
     super.dispose();
   }
 
-  Color averageColor = Color(0xffae242c);
+  Color averageColor = Color(0xff171717);
 
   int gottenStars = 4;
   int selectedIndex = -1;
@@ -267,8 +267,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
             ),
             // 하단 슬라이더 바 가사, 재새중 목록(widget)
             MusicPlayPageSlideBottomBar(
-                images: images,
-                title: title,
+                userPlayed: widget.userPlayed,
                 Lyrics: currentLyrics,
                 imageColor: averageColor),
           ],

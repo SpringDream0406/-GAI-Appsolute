@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
 
 class SlideBarList extends StatefulWidget {
-  final List<String> images;
-  final List<String> title;
-  const SlideBarList({super.key, required this.title, required this.images});
+  final List<Activity> userPlayed;
+  const SlideBarList({super.key, required this.userPlayed});
 
   @override
   State<SlideBarList> createState() => _SlideBarListState();
@@ -19,7 +19,7 @@ class _SlideBarListState extends State<SlideBarList> {
       child: ListView.builder(
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,
-          itemCount: widget.images.length,
+          itemCount: widget.userPlayed.length,
           itemBuilder: (_, index) {
             return GestureDetector(
               onTap: () {},
@@ -34,8 +34,11 @@ class _SlideBarListState extends State<SlideBarList> {
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.white,
                           image: DecorationImage(
-                              image:
-                                  AssetImage("assets/" + widget.images[index]),
+                              image: NetworkImage(
+                                  "http://192.168.219.106:3300/img/album/" +
+                                      widget.userPlayed[index].albumIndex
+                                          .toString() +
+                                      ".jpg"),
                               fit: BoxFit.cover)),
                     ),
                     SizedBox(
@@ -48,20 +51,23 @@ class _SlideBarListState extends State<SlideBarList> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppText(
-                                    text: widget.title[index].toString(),
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
-                                  AppText(
-                                    text: "잔나비",
-                                    color: Colors.white70,
-                                    size: 15,
-                                  )
-                                ],
+                              width: 200,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppText(
+                                      text: widget.userPlayed[index].song,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                    AppText(
+                                      text: widget.userPlayed[index].singer,
+                                      color: Colors.white70,
+                                      size: 15,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             Container(

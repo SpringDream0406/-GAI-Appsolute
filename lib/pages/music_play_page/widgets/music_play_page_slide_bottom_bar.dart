@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_slide_bar_list.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
 import 'package:flutter_test_project/widgets/pastel_color.dart';
@@ -6,15 +7,13 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MusicPlayPageSlideBottomBar extends StatefulWidget {
-  final List<String> images;
-  final List<String> title;
+  final List<Activity> userPlayed;
   final Color imageColor;
   final String Lyrics;
   const MusicPlayPageSlideBottomBar(
       {Key? key,
       required this.Lyrics,
-      required this.images,
-      required this.title,
+      required this.userPlayed,
       required this.imageColor})
       : super(key: key);
 
@@ -95,10 +94,7 @@ class _MusicPlayPageSlideBottomBarState
                     child: TabBarView(
                       controller: _sidebartabController,
                       children: [
-                        SlideBarList(
-                          images: widget.images,
-                          title: widget.title,
-                        ),
+                        SlideBarList(userPlayed: widget.userPlayed),
                         Container(
                           padding: EdgeInsets.only(top: 20, bottom: 10),
                           alignment: Alignment.center,

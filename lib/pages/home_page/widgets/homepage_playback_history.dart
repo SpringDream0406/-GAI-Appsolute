@@ -11,12 +11,10 @@ import 'package:flutter_test_project/pages/main_page/main_page.dart';
 
 class PlayBackHistory extends StatelessWidget {
   final List<Activity> userPlayed;
-  final List<TestModel> info;
 
   const PlayBackHistory({
     super.key,
     required this.userPlayed,
-    required this.info,
   });
 
   @override
@@ -51,7 +49,7 @@ class PlayBackHistory extends StatelessWidget {
             mainNavigatorKey.currentState!.push(
               MaterialPageRoute(
                   builder: (context) => MusicPlayPage(
-                        info: info[index],
+                        selectedActivity: userPlayed[rankIndex],
                         userPlayed: userPlayed,
                       )),
             );

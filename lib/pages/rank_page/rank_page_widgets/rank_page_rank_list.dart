@@ -48,7 +48,7 @@ class RankPageRankList extends StatelessWidget {
             mainNavigatorKey.currentState!.push(
               MaterialPageRoute(
                   builder: (context) => MusicPlayPage(
-                        info: info[index],
+                        selectedActivity: userPlayed[rankIndex],
                         userPlayed: userPlayed,
                       )),
             );
