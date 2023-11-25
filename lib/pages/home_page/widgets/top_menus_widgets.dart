@@ -38,7 +38,7 @@ class MenuContentBuilder {
           playList: recommend.emotion, userimg: userimg, info: Info);
     } else if (selectedMenu == "잠잘 때") {
       return SleepMenuWidget(
-          playList: recommend.activity, userimg: userimg, info: Info);
+          playList: recommend.time, userimg: userimg, info: Info);
     } else {
       return Container(); // 선택된 메뉴가 없을 때의 기본 위젯
     }
