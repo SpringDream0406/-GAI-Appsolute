@@ -1,9 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/widgets/pastel_color.dart';
 
 class MusicPlayPageBackground extends StatefulWidget {
-  final List<String> images;
+  final List<Activity> images;
   final PageController musicpagecontroller;
   const MusicPlayPageBackground(
       {super.key, required this.images, required this.musicpagecontroller});
@@ -44,8 +45,11 @@ class _MusicPlayPageBackgroundState extends State<MusicPlayPageBackground> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/" + widget.images[index]),
+                                      image: NetworkImage(
+                                          "http://192.168.219.106:3300/img/album/" +
+                                              widget.images[index].albumIndex
+                                                  .toString() +
+                                              ".jpg"),
                                       fit: BoxFit.cover)),
                             ),
                           ],

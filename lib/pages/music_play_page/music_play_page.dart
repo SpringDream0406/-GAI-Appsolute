@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/audio_file.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_background.dart';
@@ -8,17 +9,17 @@ import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_pa
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_top_menu.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:flutter_test_project/widgets/pastel_color.dart';
 import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 //자동으로 dispose되는 페이지 플레이어를 백그라운드에서 실행하려면 싱글톤으로 상태 해제 없이
 // 가져가야한다.
 
 class MusicPlayPage extends StatefulWidget {
   final TestModel? info;
-  const MusicPlayPage({super.key, required this.info});
+  final List<Activity> userPlayed;
+  const MusicPlayPage(
+      {super.key, required this.info, required this.userPlayed});
 
   @override
   State<MusicPlayPage> createState() => _MusicPlayPageState();
@@ -28,11 +29,19 @@ final musicPlayer = AudioPlayer();
 
 class _MusicPlayPageState extends State<MusicPlayPage> {
   late PageController _musicpagecontroller;
+  List<String> currentSingerOrSongOrLyrics = ['', '', ''];
+  String currentLyrics = '';
 
   @override
   void initState() {
     super.initState();
     _musicpagecontroller = PageController();
+    if (widget.userPlayed.isNotEmpty) {
+      // 초기 가수 이름 설정
+      currentSingerOrSongOrLyrics[0] = widget.userPlayed[0].singer;
+      currentSingerOrSongOrLyrics[1] = widget.userPlayed[0].song;
+      currentLyrics = widget.userPlayed[0].lyrics;
+    }
   }
 
   @override
@@ -75,7 +84,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
           children: [
             // 전체 배경 이미지 (widget)
             MusicPlayPageBackground(
-              images: images,
+              images: widget.userPlayed,
               musicpagecontroller: _musicpagecontroller,
             ),
             // 상단의 메뉴(뒤로가기, 앞으로 가기.)
@@ -100,26 +109,20 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                   child: Column(
                     // 하단의 내용이 들어 있다.- 이찬용
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AppLargeText(
-                            text: "환상의 나라",
-                            color: Colors.white70,
-                            size: 26,
-                          ),
-                        ],
+                      Center(
+                        child: AppLargeText(
+                          text: currentSingerOrSongOrLyrics[1],
+                          color: Colors.white70,
+                          size: 26,
+                        ),
                       ),
                       SizeBoxH05(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AppLargeText(
-                            text: "잔나비",
-                            color: Colors.white70,
-                            size: 20,
-                          )
-                        ],
+                      Center(
+                        child: AppLargeText(
+                          text: currentSingerOrSongOrLyrics[0],
+                          color: Colors.white70,
+                          size: 20,
+                        ),
                       ),
                       SizeBoxH20(),
                     ],
@@ -189,13 +192,15 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                 width: MediaQuery.of(context).size.width,
                 child: PageView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: images.length,
+                    itemCount: widget.userPlayed.length,
                     onPageChanged: (index) async {
                       _musicpagecontroller
                           .jumpToPage(index); // 첫 번째 PageView와 동기화
 
-                      final ImageProvider imageProvider = AssetImage(
-                          "assets/" + images[index]); // 현재 페이지의 이미지를 가져오는 코드
+                      final ImageProvider imageProvider = NetworkImage(
+                          "http://192.168.219.106:3300/img/album/" +
+                              widget.userPlayed[index].albumIndex.toString() +
+                              ".jpg"); // 현재 페이지의 이미지를 가져오는 코드
 
                       // PaletteGenerator를 이용하여 이미지 분석
                       try {
@@ -210,6 +215,11 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                         setState(() {
                           // 이곳에서 paletteGenerator의 색상을 사용할 수 있습니다.
                           averageColor = paletteGenerator.dominantColor!.color;
+                          currentSingerOrSongOrLyrics[0] =
+                              widget.userPlayed[index].singer;
+                          currentSingerOrSongOrLyrics[1] =
+                              widget.userPlayed[index].song;
+                          currentLyrics = widget.userPlayed[index].lyrics;
                           print(averageColor.toString());
                           // 이 값을 위젯의 상태에 저장하여 UI에 적용합니다.
                         });
@@ -240,8 +250,12 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                                     ],
                                     color: Colors.white,
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/" + images[index]),
+                                        image: NetworkImage(
+                                            "http://192.168.219.106:3300/img/album/" +
+                                                widget.userPlayed[index]
+                                                    .albumIndex
+                                                    .toString() +
+                                                ".jpg"),
                                         fit: BoxFit.cover)),
                               ),
                             ],
@@ -253,7 +267,10 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
             ),
             // 하단 슬라이더 바 가사, 재새중 목록(widget)
             MusicPlayPageSlideBottomBar(
-                images: images, title: title, imageColor: averageColor),
+                images: images,
+                title: title,
+                Lyrics: currentLyrics,
+                imageColor: averageColor),
           ],
         ),
       ),

@@ -9,8 +9,10 @@ class MusicPlayPageSlideBottomBar extends StatefulWidget {
   final List<String> images;
   final List<String> title;
   final Color imageColor;
+  final String Lyrics;
   const MusicPlayPageSlideBottomBar(
       {Key? key,
+      required this.Lyrics,
       required this.images,
       required this.title,
       required this.imageColor})
@@ -89,7 +91,7 @@ class _MusicPlayPageSlideBottomBarState
                   child: Container(
                     padding: const EdgeInsets.only(left: 15),
                     height: MediaQuery.of(context).size.height,
-                    width: double.maxFinite,
+                    width: MediaQuery.of(context).size.width,
                     child: TabBarView(
                       controller: _sidebartabController,
                       children: [
@@ -97,19 +99,21 @@ class _MusicPlayPageSlideBottomBarState
                           images: widget.images,
                           title: widget.title,
                         ),
-                        Center(
-                            child: Column(
-                          children: [
-                            AppText(
-                              text: '노래 가사가 들어갈 공간~',
-                              size: 20,
+                        Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                          alignment: Alignment.center,
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child: SingleChildScrollView(
+                            // 스크롤 뷰 추가
+                            child: Text(
+                              widget.Lyrics,
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                            AppText(
-                              text: '데이터 확인: ${widget.title[1]}',
-                              size: 20,
-                            ),
-                          ],
-                        )),
+                          ),
+                        ),
                       ],
                     ),
                   ),

@@ -76,6 +76,7 @@ class _RankPageState extends State<RankPage> {
                 builder: (context, state) {
                   if (state is LoadedState) {
                     var info = state.places;
+                    var infomation = state.lastResponse;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +125,10 @@ class _RankPageState extends State<RankPage> {
 
                         // 인기순위가 들어갑니다. 상승하락중, 등수, 앨범자켓, 노래 타이틀, 가수, 설정,
                         RankPageRankList(
-                            images: images, titles: title, info: info),
+                            images: images,
+                            titles: title,
+                            info: info,
+                            userPlayed: infomation.user.liked),
 
                         SizeBoxH20(),
                         RankPageTitleText(

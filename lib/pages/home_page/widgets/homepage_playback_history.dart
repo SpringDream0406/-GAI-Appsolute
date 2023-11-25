@@ -50,7 +50,10 @@ class PlayBackHistory extends StatelessWidget {
           onTap: () {
             mainNavigatorKey.currentState!.push(
               MaterialPageRoute(
-                  builder: (context) => MusicPlayPage(info: info[index])),
+                  builder: (context) => MusicPlayPage(
+                        info: info[index],
+                        userPlayed: userPlayed,
+                      )),
             );
           },
           child: Container(
