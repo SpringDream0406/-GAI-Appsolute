@@ -49,7 +49,7 @@ class PlayBackHistory extends StatelessWidget {
             mainNavigatorKey.currentState!.push(
               MaterialPageRoute(
                   builder: (context) => MusicPlayPage(
-                        selectedActivity: userPlayed[rankIndex],
+                        selectedIndex: rankIndex,
                         userPlayed: userPlayed,
                       )),
             );

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test_project/models/data_model.dart';
-import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/audio_file.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_background.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_slide_bottom_bar.dart';
@@ -17,9 +16,9 @@ import 'package:palette_generator/palette_generator.dart';
 
 class MusicPlayPage extends StatefulWidget {
   final List<Activity> userPlayed;
-  final Activity selectedActivity;
+  final int selectedIndex;
   const MusicPlayPage(
-      {super.key, required this.userPlayed, required this.selectedActivity});
+      {super.key, required this.userPlayed, required this.selectedIndex});
 
   @override
   State<MusicPlayPage> createState() => _MusicPlayPageState();
@@ -28,26 +27,31 @@ class MusicPlayPage extends StatefulWidget {
 final musicPlayer = AudioPlayer();
 
 class _MusicPlayPageState extends State<MusicPlayPage> {
-  late PageController _musicpagecontroller;
+  late PageController _pageController;
+
   List<String> currentSingerOrSongOrLyrics = ['', '', ''];
   String currentLyrics = '';
 
   @override
   void initState() {
     super.initState();
-    _musicpagecontroller = PageController();
-    if (widget.userPlayed.isNotEmpty) {
-      // 초기 가수 이름 설정
-      currentSingerOrSongOrLyrics[0] = widget.userPlayed[0].singer;
-      currentSingerOrSongOrLyrics[1] = widget.userPlayed[0].song;
-      currentLyrics = widget.userPlayed[0].lyrics;
-    }
+    _pageController = PageController(initialPage: widget.selectedIndex);
+    loadData(widget.selectedIndex);
   }
 
   @override
   void dispose() {
-    _musicpagecontroller.dispose(); // _tabController를 dispose 메서드에서 해제
+    _pageController.dispose(); // _tabController를 dispose 메서드에서 해제
     super.dispose();
+  }
+
+  void loadData(int index) {
+    setState(() {
+      currentSingerOrSongOrLyrics[0] = widget.userPlayed[index].singer;
+      currentSingerOrSongOrLyrics[1] = widget.userPlayed[index].song;
+      currentLyrics = widget.userPlayed[index].lyrics;
+      // 필요한 경우 여기에 배경 이미지 색상 변경 로직을 추가할 수 있습니다.
+    });
   }
 
   Color averageColor = Color(0xff171717);
@@ -85,7 +89,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
             // 전체 배경 이미지 (widget)
             MusicPlayPageBackground(
               images: widget.userPlayed,
-              musicpagecontroller: _musicpagecontroller,
+              musicpagecontroller: _pageController,
             ),
             // 상단의 메뉴(뒤로가기, 앞으로 가기.)
             MusicPlayPageTopMenu(),
@@ -191,11 +195,11 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                 height: MediaQuery.of(context).size.width,
                 width: MediaQuery.of(context).size.width,
                 child: PageView.builder(
+                    controller: _pageController,
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.userPlayed.length,
                     onPageChanged: (index) async {
-                      _musicpagecontroller
-                          .jumpToPage(index); // 첫 번째 PageView와 동기화
+                      loadData(index);
 
                       final ImageProvider imageProvider = NetworkImage(
                           "http://192.168.219.106:3300/img/album/" +
