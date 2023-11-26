@@ -76,9 +76,9 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
           children: [
             // 전체 배경 이미지 (widget)
             MusicPlayPageBackground(
-              images: widget.userPlayed,
-              musicpagecontroller: _pageController,
-            ),
+                images: widget.userPlayed,
+                musicpagecontroller: _pageController,
+                selectedIndex: widget.selectedIndex),
             // 상단의 메뉴(뒤로가기, 앞으로 가기.)
             MusicPlayPageTopMenu(),
             // 하단의 출력 공간

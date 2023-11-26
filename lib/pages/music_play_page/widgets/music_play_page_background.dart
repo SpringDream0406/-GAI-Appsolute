@@ -5,8 +5,12 @@ import 'package:flutter_test_project/models/data_model.dart';
 class MusicPlayPageBackground extends StatefulWidget {
   final List<Activity> images;
   final PageController musicpagecontroller;
+  final int selectedIndex;
   const MusicPlayPageBackground(
-      {super.key, required this.images, required this.musicpagecontroller});
+      {super.key,
+      required this.images,
+      required this.musicpagecontroller,
+      required this.selectedIndex});
 
   @override
   State<MusicPlayPageBackground> createState() =>
@@ -16,14 +20,28 @@ class MusicPlayPageBackground extends StatefulWidget {
 class _MusicPlayPageBackgroundState extends State<MusicPlayPageBackground> {
   final ValueNotifier<int> _pageIndexNotifier = ValueNotifier<int>(0);
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   widget.musicpagecontroller.addListener(_pageListener);
+  // }
+  //
+  // void _pageListener() {
+  //   _pageIndexNotifier.value = widget.musicpagecontroller.page!.round();
+  // }
+
   @override
   void initState() {
     super.initState();
+    _pageIndexNotifier.value = widget.selectedIndex; // 수정된 부분
     widget.musicpagecontroller.addListener(_pageListener);
   }
 
   void _pageListener() {
-    _pageIndexNotifier.value = widget.musicpagecontroller.page!.round();
+    int currentPage = widget.musicpagecontroller.page!.round();
+    if (_pageIndexNotifier.value != currentPage) {
+      _pageIndexNotifier.value = currentPage;
+    }
   }
 
   @override
