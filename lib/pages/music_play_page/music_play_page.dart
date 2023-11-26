@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/audio_file.dart';
@@ -31,11 +30,17 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
 
   List<String> currentSingerOrSongOrLyrics = ['', '', ''];
   String currentLyrics = '';
+  late Color averageColor;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: widget.selectedIndex);
+    _extractDominantColor(widget.selectedIndex).then((color) {
+      setState(() {
+        averageColor = color; // 추출한 색상으로 초기화
+      });
+    });
     loadData(widget.selectedIndex);
   }
 
@@ -45,6 +50,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
     super.dispose();
   }
 
+  // 가수, 노래, 가사를 담는다.
   void loadData(int index) {
     setState(() {
       currentSingerOrSongOrLyrics[0] = widget.userPlayed[index].singer;
@@ -54,7 +60,21 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
     });
   }
 
-  Color averageColor = Color(0xff171717);
+  Future<Color> _extractDominantColor(int index) async {
+    String imageUrl =
+        "http://192.168.219.106:3300/img/album/${widget.userPlayed[index].albumIndex}.jpg";
+    try {
+      final PaletteGenerator paletteGenerator =
+          await PaletteGenerator.fromImageProvider(
+        NetworkImage(imageUrl),
+        size: Size(200, 100),
+      );
+      return paletteGenerator.dominantColor?.color ?? Colors.black;
+    } catch (e) {
+      print('색상 추출 실패: $e');
+      return Colors.black; // 오류 시 기본 색상 반환
+    }
+  }
 
   int gottenStars = 4;
   int selectedIndex = -1;
