@@ -20,25 +20,19 @@ class MusicPlayPageBackground extends StatefulWidget {
 class _MusicPlayPageBackgroundState extends State<MusicPlayPageBackground> {
   final ValueNotifier<int> _pageIndexNotifier = ValueNotifier<int>(0);
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   widget.musicpagecontroller.addListener(_pageListener);
-  // }
-  //
-  // void _pageListener() {
-  //   _pageIndexNotifier.value = widget.musicpagecontroller.page!.round();
-  // }
-
   @override
   void initState() {
     super.initState();
-    _pageIndexNotifier.value = widget.selectedIndex; // 수정된 부분
+    int initialIndex =
+        widget.selectedIndex >= 0 && widget.selectedIndex < widget.images.length
+            ? widget.selectedIndex
+            : 0;
+    _pageIndexNotifier.value = initialIndex;
     widget.musicpagecontroller.addListener(_pageListener);
   }
 
   void _pageListener() {
-    int currentPage = widget.musicpagecontroller.page!.round();
+    int currentPage = widget.musicpagecontroller.page?.round() ?? 0;
     if (_pageIndexNotifier.value != currentPage) {
       _pageIndexNotifier.value = currentPage;
     }
@@ -56,25 +50,21 @@ class _MusicPlayPageBackgroundState extends State<MusicPlayPageBackground> {
     return Positioned(
       left: 0,
       right: 0,
-      child: ClipRRect(
-        child: ImageFiltered(
-          imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: ValueListenableBuilder<int>(
-              valueListenable: _pageIndexNotifier,
-              builder: (context, value, child) {
-                String imageUrl =
-                    "http://192.168.219.106:3300/img/album/${widget.images[value].albumIndex}.jpg";
-                print("Loading image: $imageUrl");
-                return Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                );
-              },
-            ),
-          ),
+      child: ImageFiltered(
+        imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
+        child: ValueListenableBuilder<int>(
+          valueListenable: _pageIndexNotifier,
+          builder: (context, value, child) {
+            String imageUrl =
+                "http://192.168.219.106:3300/img/album/${widget.images[value].albumIndex}.jpg";
+            print("Loading image: $imageUrl");
+            return Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            );
+          },
         ),
       ),
     );
