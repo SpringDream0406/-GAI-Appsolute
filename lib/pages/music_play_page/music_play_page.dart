@@ -64,18 +64,6 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
 
   List menu = ["좋아요 | 싫어요", "추가하기", "공유", "평가하기", "가수 정보", "앨범 정보"];
 
-  List<String> images = [
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-  ];
-
-  List<String> title = ["환상의나라", "전설", "몽키", "소곡집1", "소곡집2", "몽키", "소곡집2"];
-
   @override
   Widget build(BuildContext context) {
     // MusicPlayState musicplay = state as MusicPlayState;
