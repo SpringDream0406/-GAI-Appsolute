@@ -1,4 +1,6 @@
 // import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_test_project/globals/globals.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_project/pages/music_play_page/music_play_page.dart';
@@ -6,8 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //상태코드 모두 주석처리
 class AudioFile extends StatefulWidget {
+  final PageController pageController;
+  final List<Activity> userPlayed;
   // final AudioPlayer musicPlayer;
   const AudioFile({
+    required this.userPlayed,
+    required this.pageController,
     super.key,
     // required this.musicPlayer
   });
@@ -17,7 +23,7 @@ class AudioFile extends StatefulWidget {
 }
 
 class _AudioFileState extends State<AudioFile> {
-  // late AudioPlayer musicPlayer;
+  late AudioPlayer musicPlayer;
 
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
@@ -27,10 +33,29 @@ class _AudioFileState extends State<AudioFile> {
   bool isPaused = false;
   bool isLoop = false;
 
+  // 넘기기 버튼에 들어가는것 (절대 지우지 말것)
+  void _goToNextPage() {
+    int currentPage = widget.pageController.page!.toInt();
+    int totalPages = widget.userPlayed.length;
+
+    if (currentPage < totalPages - 1) {
+      widget.pageController.nextPage(
+          duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+    }
+  }
+
+  // 뒤로가기 버튼에 들어가는것 (절대 지우지 말것)
+  void _goToPreviousPage() {
+    if (widget.pageController.page!.toInt() > 0) {
+      widget.pageController.previousPage(
+          duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    // musicPlayer = AudioPlayer();
+    musicPlayer = AudioPlayer();
     _initAudioPlayer();
     // musicPlayer.onPlayerStateChanged.listen((state) {
     //   setState(() {
@@ -61,9 +86,13 @@ class _AudioFileState extends State<AudioFile> {
     Icons.pause,
   ];
 
+  // Future<void> _initAudioPlayer() async {
+  //   await musicPlayer.setUrl(
+  //       'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+  // }
+
   Future<void> _initAudioPlayer() async {
-    await musicPlayer.setUrl(
-        'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    await musicPlayer.setUrl('https://192.168.219.106:3300/media/32706177.mp3');
   }
 
   // @override
@@ -181,9 +210,7 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {
-                    // skip_to_prevous
-                  })),
+                  onPressed: _goToPreviousPage)),
           btnStart(),
           Container(
               width: 60,
@@ -197,9 +224,7 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: () {
-                    // skip button
-                  })),
+                  onPressed: _goToNextPage)),
           Container(
               width: 60,
               height: 60,

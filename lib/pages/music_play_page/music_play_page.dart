@@ -193,7 +193,10 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                         ),
                       ),
                     ),
-                    AudioFile(),
+                    AudioFile(
+                      userPlayed: widget.userPlayed,
+                      pageController: _pageController,
+                    ),
                   ],
                 )),
             // 앨범자켓 (현재 재생되는 앨범자켓이 출력되는 장소입니다)
