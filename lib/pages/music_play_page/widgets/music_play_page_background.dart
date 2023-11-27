@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 
 class MusicPlayPageBackground extends StatefulWidget {
@@ -51,18 +52,23 @@ class _MusicPlayPageBackgroundState extends State<MusicPlayPageBackground> {
       left: 0,
       right: 0,
       child: ImageFiltered(
-        imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
+        imageFilter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
         child: ValueListenableBuilder<int>(
           valueListenable: _pageIndexNotifier,
           builder: (context, value, child) {
             String imageUrl =
-                "http://192.168.219.106:3300/img/album/${widget.images[value].albumIndex}.jpg";
-            print("Loading image: $imageUrl");
-            return Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+                "${GlobalConfig.apiEndpoint}/img/album/${widget.images[value].albumIndex}.jpg";
+            return ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.10), // 검은색 필터를 적용합니다.
+                BlendMode.darken, // 블렌드 모드를 사용하여 필터 효과를 결합합니다.
+              ),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+              ),
             );
           },
         ),

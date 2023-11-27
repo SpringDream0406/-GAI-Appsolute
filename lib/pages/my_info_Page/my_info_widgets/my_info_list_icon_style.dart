@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_album_page/music_list_album_page.dart';
@@ -51,7 +52,7 @@ class MyInfoListIconStyle extends StatelessWidget {
                               title: userLikeSong[index].singer,
                               info: info[index],
                               imgAsset:
-                                  "http://192.168.219.106:3300/img/singer/" +
+                                  "${GlobalConfig.apiEndpoint}/img/singer/" +
                                       userLikeSong[index]
                                           .singerIndex
                                           .toString() +
@@ -64,7 +65,7 @@ class MyInfoListIconStyle extends StatelessWidget {
                               title: userLikeSong[index].album,
                               info: info[index],
                               imgAsset:
-                                  "http://192.168.219.106:3300/img/album/" +
+                                  "${GlobalConfig.apiEndpoint}/img/album/" +
                                       userLikeSong[index]
                                           .albumIndex
                                           .toString() +
@@ -86,10 +87,10 @@ class MyInfoListIconStyle extends StatelessWidget {
                         color: Colors.grey[800],
                         image: DecorationImage(
                           image: NetworkImage(randomNumberlist[index] == 1
-                              ? "http://192.168.219.106:3300/img/singer/" +
+                              ? "${GlobalConfig.apiEndpoint}/img/singer/" +
                                   userLikeSong[index].singerIndex.toString() +
                                   ".jpg"
-                              : "http://192.168.219.106:3300/img/album/" +
+                              : "${GlobalConfig.apiEndpoint}/img/album/" +
                                   userLikeSong[index].albumIndex.toString() +
                                   ".jpg"),
                           fit: BoxFit.cover,

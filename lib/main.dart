@@ -7,7 +7,7 @@ import 'package:flutter_test_project/pages/music_list_artist_page/cubit/music_li
 import 'package:flutter_test_project/pages/music_list_page/cubit/music_list_page_info_cubits.dart';
 import 'package:flutter_test_project/services/data_services.dart';
 import 'package:flutter_test_project/services/sign_up_services.dart';
-import 'package:flutter_test_project/widgets/global_keys.dart';
+import 'package:flutter_test_project/globals/global_keys.dart';
 
 void main() {
   runApp(const MyApp());

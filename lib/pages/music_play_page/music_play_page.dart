@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/audio_file.dart';
 import 'package:flutter_test_project/pages/music_play_page/widgets/music_play_page_background.dart';
@@ -30,7 +31,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
 
   List<String> currentSingerOrSongOrLyrics = ['', '', ''];
   String currentLyrics = '';
-  late Color averageColor;
+  Color? averageColor = Colors.black;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
 
   Future<Color> _extractDominantColor(int index) async {
     String imageUrl =
-        "http://192.168.219.106:3300/img/album/${widget.userPlayed[index].albumIndex}.jpg";
+        "${GlobalConfig.apiEndpoint}/img/album/${widget.userPlayed[index].albumIndex}.jpg";
     try {
       final PaletteGenerator paletteGenerator =
           await PaletteGenerator.fromImageProvider(
@@ -210,7 +211,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                       loadData(index);
 
                       final ImageProvider imageProvider = NetworkImage(
-                          "http://192.168.219.106:3300/img/album/" +
+                          "${GlobalConfig.apiEndpoint}/img/album/" +
                               widget.userPlayed[index].albumIndex.toString() +
                               ".jpg"); // 현재 페이지의 이미지를 가져오는 코드
 
@@ -263,7 +264,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                                     color: Colors.white,
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                            "http://192.168.219.106:3300/img/album/" +
+                                            "${GlobalConfig.apiEndpoint}/img/album/" +
                                                 widget.userPlayed[index]
                                                     .albumIndex
                                                     .toString() +
@@ -281,7 +282,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
             MusicPlayPageSlideBottomBar(
                 userPlayed: widget.userPlayed,
                 Lyrics: currentLyrics,
-                imageColor: averageColor),
+                imageColor: averageColor!),
           ],
         ),
       ),

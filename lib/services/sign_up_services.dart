@@ -1,3 +1,4 @@
+import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -80,7 +81,7 @@ class UserLoginService {
     required String userId,
     required String userPw,
   }) async {
-    var url = Uri.parse('http://192.168.219.106:3300/user/Login');
+    var url = Uri.parse('${GlobalConfig.apiEndpoint}/user/Login');
 
     try {
       var response = await http.post(

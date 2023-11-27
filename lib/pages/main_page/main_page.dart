@@ -6,7 +6,7 @@ import 'package:flutter_test_project/pages/rank_page/rank_page.dart';
 import 'package:flutter_test_project/pages/home_page/home_page.dart';
 import 'package:flutter_test_project/pages/my_info_Page/my_info_page.dart';
 import 'package:flutter_test_project/pages/video_page/video_page.dart';
-import 'package:flutter_test_project/widgets/global_keys.dart';
+import 'package:flutter_test_project/globals/global_keys.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

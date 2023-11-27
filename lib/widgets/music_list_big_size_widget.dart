@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/widgets/app_large_text.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
@@ -26,42 +27,6 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
   Widget build(BuildContext context) {
     double screen = MediaQuery.of(context).size.width;
 
-    // 이미지
-    List images = [
-      "jan_hon.jpeg",
-      "jan_le.jpeg",
-      "jan_monkey.jpeg",
-      "jan_so.jpeg",
-      "jan_so2.jpeg",
-      "jan_monkey.jpeg",
-      "jan_so.jpeg",
-      "jan_hon.jpeg",
-      "jan_le.jpeg",
-      "jan_monkey.jpeg",
-      "jan_so.jpeg",
-      "jan_so2.jpeg",
-      "jan_monkey.jpeg",
-      "jan_so.jpeg",
-    ];
-
-// 노래제목
-    List title = [
-      "환상의나라",
-      "전설",
-      "몽키",
-      "소곡집1",
-      "소곡집2",
-      "몽키",
-      "소곡집2",
-      "환상의나라",
-      "전설",
-      "몽키",
-      "소곡집1",
-      "소곡집2",
-      "몽키",
-      "소곡집2"
-    ];
-
     return Container(
       width: screen,
       height: screen * 1.1,
@@ -85,7 +50,7 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
                             image: NetworkImage(
-                                "http://192.168.219.106:3300/img/album/" +
+                                "${GlobalConfig.apiEndpoint}/img/album/" +
                                     widget.playList[0].albumIndex.toString() +
                                     ".jpg"),
                             fit: BoxFit.cover)),
@@ -157,7 +122,7 @@ class _MusicListBigSizePlayState extends State<MusicListBigSizePlay> {
                                     color: Colors.white,
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                            "http://192.168.219.106:3300/img/album/" +
+                                            "${GlobalConfig.apiEndpoint}/img/album/" +
                                                 widget
                                                     .playList[index].albumIndex
                                                     .toString() +

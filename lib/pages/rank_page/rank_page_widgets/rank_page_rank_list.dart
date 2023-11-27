@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
+import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_play_page/music_play_page.dart';
 import 'package:flutter_test_project/widgets/app_text.dart';
-import 'package:flutter_test_project/widgets/global_keys.dart';
+import 'package:flutter_test_project/globals/global_keys.dart';
 
 class RankPageRankList extends StatelessWidget {
   final List<String> titles;
@@ -86,7 +87,7 @@ class RankPageRankList extends StatelessWidget {
                     color: Colors.white,
                     image: DecorationImage(
                       image: NetworkImage(
-                          "http://192.168.219.106:3300/img/album/" +
+                          "${GlobalConfig.apiEndpoint}/img/album/" +
                               userPlayed[rankIndex].albumIndex.toString() +
                               ".jpg"),
                       fit: BoxFit.cover,
