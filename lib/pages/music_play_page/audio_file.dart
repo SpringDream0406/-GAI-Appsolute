@@ -1,4 +1,3 @@
-// import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_test_project/globals/globals.dart';
 import 'package:flutter_test_project/models/data_model.dart';
 import 'package:just_audio/just_audio.dart';
@@ -10,12 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AudioFile extends StatefulWidget {
   final PageController pageController;
   final List<Activity> userPlayed;
-  // final AudioPlayer musicPlayer;
+  final int selectedIndex;
   const AudioFile({
     required this.userPlayed,
     required this.pageController,
+    required this.selectedIndex,
     super.key,
-    // required this.musicPlayer
   });
 
   @override
@@ -25,6 +24,10 @@ class AudioFile extends StatefulWidget {
 class _AudioFileState extends State<AudioFile> {
   late AudioPlayer musicPlayer;
 
+  // 아이콘 초기화
+  IconData playIcon = Icons.play_arrow;
+
+  // 재생시간 초기화
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
 
@@ -34,7 +37,7 @@ class _AudioFileState extends State<AudioFile> {
   bool isLoop = false;
 
   // 넘기기 버튼에 들어가는것 (절대 지우지 말것)
-  void _goToNextPage() {
+  void _goToNext() {
     int currentPage = widget.pageController.page!.toInt();
     int totalPages = widget.userPlayed.length;
 
@@ -45,54 +48,101 @@ class _AudioFileState extends State<AudioFile> {
   }
 
   // 뒤로가기 버튼에 들어가는것 (절대 지우지 말것)
-  void _goToPreviousPage() {
+  void _goToPrevious() {
     if (widget.pageController.page!.toInt() > 0) {
       widget.pageController.previousPage(
           duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
     }
   }
 
+  // 재생버튼 (일시정지) 버튼에 들어가는것 (절대 지우지 말것.)
+  void _goToPlayPause() async {
+    setState(() {
+      isPlaying = !isPlaying; // 상태를 먼저 변경
+    });
+
+    if (isPlaying) {
+      // 재생 상태이면 play 호출
+      await musicPlayer.play();
+    } else {
+      // 일시정지 상태이면 pause 호출
+      await musicPlayer.pause();
+    }
+  }
+
+  // 인잇  스테이트
   @override
   void initState() {
     super.initState();
     musicPlayer = AudioPlayer();
-    _initAudioPlayer();
-    // musicPlayer.onPlayerStateChanged.listen((state) {
-    //   setState(() {
-    //     // isPlaying = state == PlayerState.playing;
-    //   });
-    // });
 
-    // musicPlayer.onDurationChanged.listen((nuwDuration) {
-    //   setState(() {
-    //     duration = nuwDuration;
-    //   });
-    // });
-
-    // musicPlayer.onPositionChanged.listen((newPosition) {
-    //   setState(() {
-    //     position = newPosition;
-    //   });
-    // });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadState();
+    // PageController의 리스너 설정
+    widget.pageController.addListener(() {
+      if (widget.pageController.page ==
+          widget.pageController.page!.round().toDouble()) {
+        // 페이지 인덱스가 변경될 때마다 _initAudioPlayer 호출
+        _initAudioPlayer();
+      }
     });
+
+    // 슬라이드 바.
+    musicPlayer.playerStateStream.listen((playerState) {
+      setState(() {
+        // 재생 여부
+        isPlaying = playerState.playing;
+      });
+    });
+
+    // 오디오 트랙의 길이
+    musicPlayer.durationStream.listen((newDuration) {
+      setState(() {
+        duration = newDuration ?? Duration.zero;
+      });
+    });
+
+    // 현재 재생 위치
+    musicPlayer.positionStream.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   loadState();
+    // });
+
+    // 가장 중요한 것. 노래 재생 (절대 지우면 안됨)
+    _initAudioPlayer(initialPage: true);
   }
 
-  IconData playIcon = Icons.play_arrow;
-  List<IconData> _icons = [
-    Icons.play_arrow,
-    Icons.pause,
-  ];
-
+  // 테스트용
   // Future<void> _initAudioPlayer() async {
-  //   await musicPlayer.setUrl(
-  //       'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+  //   await musicPlayer.setAsset('assets/songs/32706177.mp3');
   // }
 
-  Future<void> _initAudioPlayer() async {
-    await musicPlayer.setUrl('https://192.168.219.106:3300/media/32706177.mp3');
+  //백업
+  // Future<void> _initAudioPlayer() async {
+  //   // 현재 페이지 인덱스를 정수로 변환
+  //   int currentPageIndex = widget.pageController.page!.round();
+  //   Activity currentSong = widget.userPlayed[currentPageIndex];
+  //   String songPath = 'assets/songs/${currentSong.musicIndex.toString()}.mp3';
+  //   await musicPlayer.setAsset(songPath);
+  // }
+  //setAsset <내장 파일 접근 함수>, setUrl < 외장파일 접근 함수 >
+
+  Future<void> _initAudioPlayer({bool initialPage = false}) async {
+    int currentPageIndex;
+    if (initialPage) {
+      // 초기 페이지 인덱스 사용
+      currentPageIndex = widget.selectedIndex;
+    } else {
+      // 현재 페이지 컨트롤러 인덱스 사용
+      currentPageIndex = widget.pageController.page!.round();
+    }
+
+    Activity currentSong = widget.userPlayed[currentPageIndex];
+    String songPath = 'assets/songs/${currentSong.musicIndex.toString()}.mp3';
+    await musicPlayer.setAsset(songPath);
   }
 
   // @override
@@ -101,7 +151,7 @@ class _AudioFileState extends State<AudioFile> {
   //   print('App Lifecycle State: $state');
   // }
 
-  // 재생중인 시간, 남은 재생시간
+  // 재생 시간 표시 (재생시간, 남은 시간)(절대 건들지 말것,)
   String formatTime(int seconds) {
     int minutes = Duration(seconds: seconds).inMinutes;
     int remainingSeconds = seconds - (minutes * 60);
@@ -143,38 +193,10 @@ class _AudioFileState extends State<AudioFile> {
   @override
   void dispose() {
     // 현재 상태를 저장합니다.
-    saveState();
+    // saveState();
     // 오디오 플레이어를 정리합니다.
     musicPlayer.dispose();
     super.dispose();
-  }
-
-  Widget btnStart() {
-    return Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50), color: Colors.black45),
-      child: IconButton(
-          icon: Icon(
-            isPlaying == false ? _icons[0] : _icons[1],
-            size: 45,
-            color: Colors.white,
-          ),
-          onPressed: () async {
-            if (isPlaying == false) {
-              await musicPlayer.play();
-              setState(() {
-                isPlaying = true;
-              });
-            } else if (isPlaying == true) {
-              await musicPlayer.pause();
-              setState(() {
-                isPlaying = false;
-              });
-            }
-          }),
-    );
   }
 
   Widget loadAsset() {
@@ -198,6 +220,7 @@ class _AudioFileState extends State<AudioFile> {
                   onPressed: () {
                     //shuffle_button
                   })),
+          // 뒤로가기
           Container(
               width: 60,
               height: 60,
@@ -210,8 +233,22 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: _goToPreviousPage)),
-          btnStart(),
+                  onPressed: _goToPrevious)),
+          // 플레이 정지버튼
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50), color: Colors.black45),
+            child: IconButton(
+                icon: Icon(
+                  isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 45,
+                  color: Colors.white,
+                ),
+                onPressed: _goToPlayPause),
+          ),
+          // 앞으로 가기
           Container(
               width: 60,
               height: 60,
@@ -224,7 +261,7 @@ class _AudioFileState extends State<AudioFile> {
                     size: 35,
                     color: Colors.white,
                   ),
-                  onPressed: _goToNextPage)),
+                  onPressed: _goToNext)),
           Container(
               width: 60,
               height: 60,
@@ -255,16 +292,15 @@ class _AudioFileState extends State<AudioFile> {
               inactiveColor: Colors.black38,
               min: 0,
               max: duration.inSeconds.toDouble(),
-              value: position.inSeconds.toDouble(),
+              value: position.inSeconds.clamp(0, duration.inSeconds).toDouble(),
               onChanged: (value) {
                 final position = Duration(seconds: value.toInt());
                 musicPlayer.seek(position);
-                // musicPlayer.resume();
 
                 final newPosition = Duration(seconds: value.toInt());
                 musicPlayer.seek(newPosition);
                 // 상태 저장
-                saveState();
+                // saveState();
               }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

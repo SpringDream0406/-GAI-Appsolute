@@ -196,6 +196,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                     AudioFile(
                       userPlayed: widget.userPlayed,
                       pageController: _pageController,
+                      selectedIndex: widget.selectedIndex,
                     ),
                   ],
                 )),
