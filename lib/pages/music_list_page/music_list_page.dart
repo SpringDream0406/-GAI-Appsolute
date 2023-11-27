@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test_project/globals/globals.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_page/cubit/music_list_page_info_cubits.dart';
 import 'package:flutter_test_project/pages/music_list_page/widgets/music_list_add_button.dart';
@@ -13,7 +15,8 @@ import 'package:flutter_test_project/widgets/sized_box_widgets.dart';
 
 class MusicListPage extends StatefulWidget {
   final TestModel info;
-  const MusicListPage({super.key, required this.info});
+  final List<Activity> playList;
+  const MusicListPage({super.key, required this.info, required this.playList});
 
   @override
   State<MusicListPage> createState() => _MusicListPageState();
@@ -36,48 +39,8 @@ class _MusicListPageState extends State<MusicListPage> {
   }
 
   // 스크롤 이동을 주기위한 코드입니다.-- 여기까지입니다.
-
   int selectedIndex = -1;
   Color? color = Colors.white70;
-
-  // 아래는 전부 테스트용.
-  String test = "";
-
-  // 이미지
-  List images = [
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_hon.jpeg",
-    "jan_le.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-    "jan_so2.jpeg",
-    "jan_monkey.jpeg",
-    "jan_so.jpeg",
-  ];
-
-  // 노래제목
-  List title = [
-    "환상의나라",
-    "전설",
-    "몽키",
-    "소곡집1",
-    "소곡집2",
-    "몽키",
-    "소곡집2",
-    "환상의나라",
-    "전설",
-    "몽키",
-    "소곡집1",
-    "소곡집2",
-    "몽키",
-    "소곡집2"
-  ];
 
   // 별점의 숫자가 들어갈 공간
   int gottenStars = 5;
@@ -135,15 +98,6 @@ class _MusicListPageState extends State<MusicListPage> {
                           ],
                         ),
                         SizeBoxH10(),
-                        Row(
-                          children: [
-                            AppLargeText(
-                              text: "데확용1 : " + widget.info.name,
-                              color: Colors.white,
-                              size: 20,
-                            )
-                          ],
-                        ),
                         SizeBoxH20(),
                         // 별 평점이 담긴 곳
                         Row(
@@ -160,7 +114,7 @@ class _MusicListPageState extends State<MusicListPage> {
                             ),
                             SizeBoxW10(),
                             AppText(
-                              text: "(4.0)",
+                              text: "(5.0)",
                               color: Colors.white70,
                             ),
                           ],
@@ -174,7 +128,7 @@ class _MusicListPageState extends State<MusicListPage> {
                               controller: _musiclistcontroller,
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
-                              itemCount: images.length,
+                              itemCount: widget.playList.length,
                               itemBuilder: (_, index) {
                                 return GestureDetector(
                                   onTap: () {
@@ -228,8 +182,12 @@ class _MusicListPageState extends State<MusicListPage> {
                                                   BorderRadius.circular(5),
                                               color: Colors.white,
                                               image: DecorationImage(
-                                                  image: AssetImage("assets/" +
-                                                      images[index]),
+                                                  image: NetworkImage(
+                                                      "${GlobalConfig.apiEndpoint}/img/album/" +
+                                                          widget.playList[index]
+                                                              .albumIndex
+                                                              .toString() +
+                                                          ".jpg"),
                                                   fit: BoxFit.cover)),
                                         ),
                                         SizedBox(
@@ -245,19 +203,23 @@ class _MusicListPageState extends State<MusicListPage> {
                                                       .spaceBetween,
                                               children: [
                                                 Container(
+                                                  width: 200,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
                                                       AppText(
-                                                        text: title[index]
-                                                            .toString(),
+                                                        text: widget
+                                                            .playList[index]
+                                                            .song,
                                                         color: Colors.white,
                                                         size: 16,
                                                       ),
                                                       AppText(
-                                                        text: "잔나비",
+                                                        text: widget
+                                                            .playList[index]
+                                                            .singer,
                                                         color: Colors.grey,
                                                         size: 15,
                                                       )
@@ -416,8 +378,11 @@ class _MusicListPageState extends State<MusicListPage> {
                             height: MediaQuery.of(context).size.height,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/' + images[index]),
+                                    image: NetworkImage(
+                                        "${GlobalConfig.apiEndpoint}/img/album/" +
+                                            widget.playList[index].albumIndex
+                                                .toString() +
+                                            ".jpg"),
                                     fit: BoxFit.cover)),
                           );
                         }),

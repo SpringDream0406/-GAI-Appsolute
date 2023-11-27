@@ -1,3 +1,5 @@
 class GlobalConfig {
-  static String apiEndpoint = "http://192.168.70.97:3300";
+  static String apiEndpoint = "http://192.168.219.106:3300";
 }
+
+// GlobalConfig.apiEndpoint

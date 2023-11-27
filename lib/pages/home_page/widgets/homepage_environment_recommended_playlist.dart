@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
 
 class EnvironmentRecommendedPlaylist extends StatelessWidget {
   final List<TestModel> info;
+  final List<Activity> playList;
 
-  const EnvironmentRecommendedPlaylist({super.key, required this.info});
+  const EnvironmentRecommendedPlaylist(
+      {super.key, required this.info, required this.playList});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,10 @@ class EnvironmentRecommendedPlaylist extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => MusicListPage(info: info[index]),
+                builder: (context) => MusicListPage(
+                  info: info[index],
+                  playList: playList,
+                ),
               ),
             );
           },

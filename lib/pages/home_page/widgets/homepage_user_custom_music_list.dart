@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
 
 class UserCustomMusicList extends StatelessWidget {
   final List<TestModel> info;
+  final List<dynamic> playList;
 
-  const UserCustomMusicList({super.key, required this.info});
+  const UserCustomMusicList(
+      {super.key, required this.info, required this.playList});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,8 @@ class UserCustomMusicList extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MusicListPage(info: info[index]),
+                  builder: (context) => MusicListPage(
+                      info: info[index], playList: playList[index]),
                 ),
               );
             },

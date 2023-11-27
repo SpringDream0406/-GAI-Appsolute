@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubits.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
 
 class EmotionRecommendedPlaylist extends StatelessWidget {
   final List<TestModel> info;
+  final List<Activity> playList;
 
-  const EmotionRecommendedPlaylist({super.key, required this.info});
+  const EmotionRecommendedPlaylist(
+      {super.key, required this.info, required this.playList});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: info.length,
+      itemCount: playList.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
@@ -21,8 +24,9 @@ class EmotionRecommendedPlaylist extends StatelessWidget {
 
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => MusicListPage(info: info[index]),
-                fullscreenDialog: true,
+                builder: (context) =>
+                    MusicListPage(info: info[index], playList: playList),
+                // fullscreenDialog: true,
               ),
             );
           },

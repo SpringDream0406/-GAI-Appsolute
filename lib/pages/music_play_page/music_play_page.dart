@@ -251,7 +251,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
                                 width: MediaQuery.of(context).size.width - 80,
                                 height: MediaQuery.of(context).size.width - 80,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
+                                    borderRadius: BorderRadius.circular(15),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black54.withOpacity(0.5),

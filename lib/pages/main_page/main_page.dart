@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_project/models/test_model.dart';
-import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
-import 'package:flutter_test_project/pages/music_play_page/music_play_page.dart';
 import 'package:flutter_test_project/pages/rank_page/rank_page.dart';
 import 'package:flutter_test_project/pages/home_page/home_page.dart';
 import 'package:flutter_test_project/pages/my_info_Page/my_info_page.dart';
 import 'package:flutter_test_project/pages/video_page/video_page.dart';
-import 'package:flutter_test_project/globals/global_keys.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

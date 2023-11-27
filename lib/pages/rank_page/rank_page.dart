@@ -114,7 +114,11 @@ class _RankPageState extends State<RankPage> {
                         SizeBoxH20(),
 
                         // 새 앨범 및 싱글 리스트뷰가 들어갑니다.
-                        RankPageNewAlbumList(userimg: userimg, info: info),
+                        RankPageNewAlbumList(
+                          userimg: userimg,
+                          info: info,
+                          playList: infomation.user.played,
+                        ),
                         SizeBoxH20(),
 
                         // 인기곡 타이틀이 들어갑니다.

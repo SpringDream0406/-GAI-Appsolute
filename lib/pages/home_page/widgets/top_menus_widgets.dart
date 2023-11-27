@@ -70,7 +70,11 @@ class RelaxMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(
+          userimg: userimg,
+          info: info,
+          playList: playList,
+        ),
       ],
     );
   }
@@ -101,7 +105,7 @@ class HappyFeelingMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -132,7 +136,7 @@ class EnergyBoostMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -163,7 +167,7 @@ class FocusMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -194,7 +198,7 @@ class ExerciseMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -225,7 +229,7 @@ class CommuteMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -256,7 +260,7 @@ class RomanceMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -287,7 +291,7 @@ class SadnessMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -318,7 +322,7 @@ class PartyMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }
@@ -349,7 +353,7 @@ class SleepMenuWidget extends StatelessWidget {
         SizeBoxH20(),
         RankPageTitleText(text: "맞춤 뮤직 스테이션"),
         SizeBoxH30(),
-        RankPageNewAlbumList(userimg: userimg, info: info),
+        RankPageNewAlbumList(userimg: userimg, info: info, playList: playList),
       ],
     );
   }

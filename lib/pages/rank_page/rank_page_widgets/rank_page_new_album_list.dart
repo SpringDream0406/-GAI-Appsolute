@@ -7,9 +7,13 @@ import 'package:flutter_test_project/widgets/app_text.dart';
 class RankPageNewAlbumList extends StatelessWidget {
   final List<String> userimg;
   final List<TestModel> info;
+  final List<dynamic> playList;
 
   const RankPageNewAlbumList(
-      {super.key, required this.userimg, required this.info});
+      {super.key,
+      required this.userimg,
+      required this.info,
+      required this.playList});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,8 @@ class RankPageNewAlbumList extends StatelessWidget {
 
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MusicListPage(info: info[index]),
+                  builder: (context) => MusicListPage(
+                      info: info[index], playList: playList[index]),
                 ),
               );
             },

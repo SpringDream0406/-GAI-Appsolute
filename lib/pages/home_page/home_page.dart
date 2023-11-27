@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_project/cubit/app_cubit_states.dart';
@@ -167,13 +169,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               controller: _tabController,
                               children: [
                                 // 장소 기반의 추천 리스트(widget)
-                                PlaceRecommendedPlaylist(info: info),
+                                PlaceRecommendedPlaylist(
+                                    info: info,
+                                    playList: infomation.user.played),
 
                                 // 상황 기반의 추천 리스트(widget)
-                                EnvironmentRecommendedPlaylist(info: info),
+                                EnvironmentRecommendedPlaylist(
+                                  info: info,
+                                  playList: infomation.user.played,
+                                ),
 
                                 // 감성 기반의 추천 리스트(widget)
-                                EmotionRecommendedPlaylist(info: info)
+                                EmotionRecommendedPlaylist(
+                                  info: info,
+                                  playList: infomation.user.played,
+                                )
                               ],
                             ),
                           ),
@@ -192,7 +202,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           // "유저가 만든 리스트"를 나열해준다. (widget)
                           const HomePageSubTitleAndIcon(text: "유저가 만든 리스트"),
                           const SizeBoxH25(),
-                          UserCustomMusicList(info: info),
+                          UserCustomMusicList(
+                            info: info,
+                            playList: infomation.user.played,
+                          ),
 
                           const SizeBoxH40(),
                           const RankPageTitleText(

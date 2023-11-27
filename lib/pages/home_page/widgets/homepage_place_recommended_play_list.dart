@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_project/models/data_model.dart';
 import 'package:flutter_test_project/models/test_model.dart';
 import 'package:flutter_test_project/pages/music_list_page/music_list_page.dart';
 
 class PlaceRecommendedPlaylist extends StatelessWidget {
   final List<TestModel> info;
+  final List<Activity> playList;
 
-  const PlaceRecommendedPlaylist({super.key, required this.info});
+  const PlaceRecommendedPlaylist(
+      {super.key, required this.info, required this.playList});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: ClampingScrollPhysics(),
       itemCount: info.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
@@ -18,7 +20,10 @@ class PlaceRecommendedPlaylist extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => MusicListPage(info: info[index]),
+                builder: (context) => MusicListPage(
+                  info: info[index],
+                  playList: playList,
+                ),
               ),
             );
           },
