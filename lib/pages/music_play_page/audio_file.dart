@@ -141,7 +141,8 @@ class _AudioFileState extends State<AudioFile> {
     }
 
     Activity currentSong = widget.userPlayed[currentPageIndex];
-    String songPath = 'assets/songs/${currentSong.musicIndex.toString()}.mp3';
+    String songPath =
+        '${GlobalConfig.apiEndpoint}/media/${currentSong.musicIndex.toString()}.mp3';
     await musicPlayer.setAsset(songPath);
   }
 

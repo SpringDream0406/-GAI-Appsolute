@@ -17,9 +17,12 @@ void ShowToast(BuildContext context, String message) {
         SizedBox(
           width: 10,
         ),
-        Text(
-          message,
-          style: TextStyle(fontSize: 16.0, color: Colors.white),
+        SizedBox(
+          width: 200,
+          child: Text(
+            message,
+            style: TextStyle(fontSize: 16.0, color: Colors.white),
+          ),
         ),
       ],
     ),
