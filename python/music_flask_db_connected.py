@@ -31,10 +31,10 @@ season_model.load_weights('result/modeling/time/season2_weights')
 
 # MySQL 연결 설정
 mysql_connection = pymysql.connect(
-    host='project-db-stu3.smhrd.com',
-    user='Insa4_App_final_5',
-    password='aischool5',
-    database='Insa4_App_final_5',
+    host='',
+    user='',
+    password='',
+    database='',
     port=3307
 )
  
