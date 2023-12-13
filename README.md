@@ -1,16 +1,11 @@
-# flutter_test_project
+# Music_App
+<img width="1508" alt="스크린샷 2023-12-13 오후 12 57 41" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/cb099fd6-af40-4edb-94f7-7b1a2b372efe">
 
-A new Flutter project.
+<img width="1474" alt="스크린샷 2023-12-13 오후 12 57 59" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/0dc5cfae-48b3-44c3-b992-89a1eff25074">
 
-## Getting Started
+<img width="1513" alt="스크린샷 2023-12-13 오후 12 58 14" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/516d80c1-792f-4820-8593-39b12e96e42d">
 
-This project is a starting point for a Flutter application.
+<img width="1499" alt="스크린샷 2023-12-13 오후 12 58 25" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/9f48126d-8b55-469f-aa8f-cd22919a541b">
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+제공된 데이터 베이스가 삭제되어 발전되지 못한 프로젝트입니다.
