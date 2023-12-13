@@ -1,4 +1,4 @@
-# Music_App
+# AI기반 음악추천 뮤직 스트리밍 앱
 # 👉 머신런닝 흐름도
 <img width="1508" alt="스크린샷 2023-12-13 오후 12 57 41" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/cb099fd6-af40-4edb-94f7-7b1a2b372efe">
 
