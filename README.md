@@ -8,7 +8,7 @@
 # 👉 스크린
 <img width="1513" alt="스크린샷 2023-12-13 오후 12 58 14" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/516d80c1-792f-4820-8593-39b12e96e42d">
 
-# 👉 스크린 / 위젯
+# 👉 스크린 / 다양화뷰
 <img width="1499" alt="스크린샷 2023-12-13 오후 12 58 25" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/9f48126d-8b55-469f-aa8f-cd22919a541b">
 
 
