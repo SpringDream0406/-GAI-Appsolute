@@ -14,6 +14,3 @@ https://www.miricanvas.com/v/12nxfzs
 
 # 👉 스크린 / 다양화뷰
 <img width="1499" alt="스크린샷 2023-12-13 오후 12 58 25" src="https://github.com/2023-AISCHOOL-APP/Appsolute/assets/137031523/9f48126d-8b55-469f-aa8f-cd22919a541b">
-
-
-# 🧶 제공된 데이터 베이스가 제거되어 발전되지 못한 프로젝트입니다.
